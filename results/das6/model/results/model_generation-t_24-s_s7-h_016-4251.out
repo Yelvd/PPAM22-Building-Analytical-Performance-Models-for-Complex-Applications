@@ -1,0 +1,160 @@
+Init: Mon Feb 14 13:47:35 CET 2022
+user: jvandijk
+hostname: node004
+jobname: single-node-24-s7-h016
+nodelist: node004
+tasks for job: 24
+tasks per node: 24
+Restoring modules from user's hemocell
+
+Currently Loaded Modules:
+  1) cmake/3.21.3   6) ucx/1.11.2        11) papi/5.7.0
+  2) gnu9/9.4.0     7) libfabric/1.13.0  12) scorep/6.0
+  3) gcc/default    8) openmpi4/4.1.1    13) scalasca/2.5
+  4) hdf5/1.10.8    9) pdtoolkit/3.25.1
+  5) hwloc/2.5.0   10) sionlib/1.7.4
+
+ 
+
+Start: Mon Feb 14 13:47:37 CET 2022
+(HemoCell) (Config) reading config-single-node-s7.xml
+ _   _   ____   __  __   _____    ___   ____   __     __ 
+( )_( ) ( ___) (  \/  ) (  _  )  / __) ( ___) (  )   (  )
+ ) _ (   )__)   )    (   )(_)(  ( (__   )__)   )(__   )(__ 
+(_) (_) (____) (_/\/\_) (_____)  \___) (____) (____) (____) 
+                         v.2.3
+
+(unbounded) (Parameters) calculating flow parameters
+(HemoCell) dt is set to *auto*. Tau will be set to 1!
+(HemoCell) System parameters:
+	 dx: 	5e-07
+	 dt: 	3.78788e-08
+	 dm: 	1.28125e-16
+	 dN: 	4.4649e-08
+	 tau: 	1
+	 nu_lbm: 	0.166667
+	 u_lb_max: 	7.57576e-07
+	 f_limit: 	0.00111985
+(unbounded) (Fluid) Initializing Palabos Fluid Field
+(HemoCell) (Fluid) Setting Fluid Equilibrium
+Size of the multi-block:     300-by-200-by-200
+Number of atomic-blocks:     24
+Smallest atomic-block:       50-by-100-by-100
+Largest atomic-block:        50-by-100-by-100
+Number of allocated cells:   12 million
+Fraction of allocated domain: 100 percent
+
+(Hemocell) (HemoCellFields) (Init) particle envelope: 25 [lu]
+Cellfield  (+ material model) of RBC
+  Volume :90 µm³ VolumeFraction of lsp per fluid node: 1.1215 %
+  Nvertex: 642
+(Cell-mechanics model) High Order model parameters for RBC cellfield
+	 k_link:   0.000183679
+	 k_area:   9.18393e-07
+	 k_bend: : 1.46943e-05
+	 k_volume: 3.67357e-06
+	 eta_m:    0
+	 mean_edge:1.00019
+	 N faces:  1280
+(HemoCell) (Timescale Seperation) Setting seperation of RBC to 20 timesteps
+(HemoCell) (Timescale separation) Setting update separation of all particles to 5 timesteps
+(HemoCell) (CellField) Setting output variables for RBC cells
+(HemoCell) (Fluid) Setting output variables for fluid field
+(HemoCell) (CellField) Loading particle positions 
+(readPositionsBloodCells) Reading particle positions...
+(readPositionsBloodCells) Particle count in file (RBC): 115200.
+(HemoCell) (Output) writing output at timestep 0 (0 s). Approx. performance: 0.00 s / iteration.
+(unbounded) fresh start: warming up cell-free fluid domain for 0 iterations...
+(unbounded) Starting simulation...
+ | RBC Volume ratio [x100%]: 1.7325
+(main)   nCells (global) = 2700
+(HemoCell) (SanityCheck) Performing Sanity check on simulation parameters and setup
+(HemoCell) WARNING: Force limit active at 50 pN. Results can be inaccurate due to force capping.
+Size of the multi-block:     300-by-200-by-200
+Number of atomic-blocks:     24
+Smallest atomic-block:       50-by-100-by-100
+Largest atomic-block:        50-by-100-by-100
+Number of allocated cells:   12 million
+Fraction of allocated domain: 100 percent
+(SanityCheck) one of the dimensions of the largest atomic block is more than 25.
+  This is inefficient, The best performance is with 16x16x16 blocks.
+  It is recommended to adjust the number of processors or the sparseBlockStructure accordingly.
+Hemocell Profiler Statistics (Only Process 0):
+HemoCell: 214.264000
+ MpiReceive: 0.000000
+ MpiSend: 0.000000
+ deleteIncompleteCells: 0.032000
+ iterate: 211.026000
+  advanceParticles: 10.191000
+  applyConstitutiveModel: 3.179000
+  collideAndStream: 144.982000
+  deleteNonLocalParticles: 0.867000
+  interpolateFluidVelocity: 4.984000
+  setExternalVector: 9.331000
+  spreadParticleForce: 30.399000
+  syncEnvelopes: 7.063000
+   MpiReceive: 1.886000
+   MpiSend: 0.904000
+ output: 1.030000
+  applyConstitutiveModel: 0.055000
+  deleteIncompleteCells: 0.008000
+  separateForceVectors: 0.093000
+  syncEnvelopes: 0.150000
+   MpiReceive: 0.027000
+   MpiSend: 0.048000
+  unifyForceVectors: 0.019000
+  updateResidenceTime: 0.000000
+  writeOutput: 0.639000
+   writeCellCSVInfo: 0.163000
+    syncEnvelopes: 0.063000
+     MpiReceive: 0.013000
+     MpiSend: 0.023000
+   writeCellField: 0.353000
+   writeFluidField: 0.122000
+ syncEnvelopes: 0.354000
+  MpiReceive: 0.041000
+  MpiSend: 0.063000
+(main) Simulation finished :) 
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+cube: ../src/measurement/SCOREP_Memory.c:398: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 16 with PID 781344 on node node004 exited on signal 6 (Aborted).
+--------------------------------------------------------------------------
+[node004:781324] PMIX ERROR: NO-PERMISSIONS in file dstore_base.c at line 237
+[node004:781324] PMIX ERROR: NO-PERMISSIONS in file dstore_base.c at line 246
+Done: Mon Feb 14 13:51:14 CET 2022
+total 96896
+drwxrwxr-x 3 jvandijk jvandijk      118 Feb 14 13:47 .
+drwxrwxr-x 3 jvandijk jvandijk       26 Feb 14 13:51 ..
+-rw-r--r-- 1 jvandijk jvandijk  4139847 Feb 14 13:47 RBC.pos
+-rw-rw-r-- 1 jvandijk jvandijk     1020 Feb 14 13:47 RBC.xml
+-rw-rw-r-- 1 jvandijk jvandijk     1654 Feb 14 13:47 config-single-node-s7.xml
+-rwxrwxr-x 1 jvandijk jvandijk 95072192 Feb 14 13:47 cube
+drwxrwxr-x 5 jvandijk jvandijk       58 Feb 14 13:47 tmp_1
+rm: cannot remove '/var/scratch/jvandijk/4251/cube/tmp_1/log_1': Directory not empty

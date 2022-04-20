@@ -80,13 +80,13 @@ dst=$output_dir
 mkdir -p "$dst"
 
 # gather local storage from all nodes
-mv $TMPDIR/cube/tmp_1/log_1/logfile.statistics $dst/$SLURM_JOB_NAME-$SLURM_JOB_ID.stats
-mv $TMPDIR/cube/$SCOREP_EXPERIMENT_DIRECTORY $dst/$SCOREP_EXPERIMENT_DIRECTORY
-(cd $TMPDIR/cube; ~/hemocell/scripts/batchPostProcess.sh)
-mv $TMPDIR/cube/tmp_1/*.xmf $dst/$SCOREP_EXPERIMENT_DIRECTORY/
-mv $TMPDIR/cube/tmp_1/hdf5 $dst/$SCOREP_EXPERIMENT_DIRECTORY/
-#mv $TMPDIR/cube/tmp_1/csv $dst/$SCOREP_EXPERIMENT_DIRECTORY/
+mv $TMPDIR/$EXPERIMENT/tmp_1/log_1/logfile.statistics $dst/$SLURM_JOB_NAME-$SLURM_JOB_ID.stats
+mv $TMPDIR/$EXPERIMENT/$SCOREP_EXPERIMENT_DIRECTORY $dst/$SCOREP_EXPERIMENT_DIRECTORY
+(cd $TMPDIR/$EXPERIMENT; ~/hemocell/scripts/batchPostProcess.sh)
+mv $TMPDIR/$EXPERIMENT/tmp_1/*.xmf $dst/$SCOREP_EXPERIMENT_DIRECTORY/
+mv $TMPDIR/$EXPERIMENT/tmp_1/hdf5 $dst/$SCOREP_EXPERIMENT_DIRECTORY/
+#mv $TMPDIR/$EXPERIMENT/tmp_1/csv $dst/$SCOREP_EXPERIMENT_DIRECTORY/
 
-rm -r $TMPDIR
+#rm -r $TMPDIR
 
 echo "Complete:" "$(date)"

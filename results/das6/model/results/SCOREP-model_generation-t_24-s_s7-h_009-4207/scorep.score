@@ -1,0 +1,43 @@
+
+Estimated aggregate size of event trace:                   99MB
+Estimated requirements for largest trace buffer (max_buf): 5MB
+Estimated memory requirements (SCOREP_TOTAL_MEMORY):       7MB
+(hint: When tracing set SCOREP_TOTAL_MEMORY=7MB to avoid intermediate flushes
+ or reduce requirements using USR regions filters.)
+
+flt     type max_buf[B]    visits time[s] time[%] time/visit[us]  region
+         ALL  4,311,829 1,970,344 4606.32   100.0        2337.83  ALL
+         MPI  4,118,420 1,776,952  338.17     7.3         190.31  MPI
+         USR    140,424   140,424 3742.71    81.3       26652.93  USR
+         COM     52,944    52,944  481.42    10.5        9092.93  COM
+      SCOREP         41        24   44.03     1.0     1834499.49  SCOREP
+
+         MPI  1,660,134   456,496    3.69     0.1           8.08  MPI_Isend
+         MPI  1,422,798   392,464    1.16     0.0           2.97  MPI_Irecv
+         MPI    616,896   615,392  264.60     5.7         429.96  MPI_Wait
+         MPI    160,952    64,032    3.28     0.1          51.24  MPI_Recv
+         MPI    132,912   132,912   26.65     0.6         200.50  MPI_Waitany
+         MPI    105,600   105,600    5.35     0.1          50.62  MPI_Probe
+         USR     24,024    24,024  249.44     5.4       10382.78  void plb::setExternalVector(plb::MultiBlockLattice3D<T, Descriptor>&, plb::Box3D, int, plb::Array<T, Descriptor<T>::d>) [with T = double; Descriptor = plb::descriptors::ForcedD3Q19Descriptor]
+         USR     24,024    24,024   39.66     0.9        1650.85  void hemo::HemoCellFields::applyConstitutiveModel(bool)
+         COM     24,000    24,000  428.35     9.3       17847.75  void plb::MultiBlockLattice3D<T, Descriptor>::collideAndStream() [with T = double; Descriptor = plb::descriptors::ForcedD3Q19Descriptor]
+         USR     24,000    24,000 2788.25    60.5      116176.98  void plb::MultiBlockLattice3D<T, Descriptor>::collideAndStreamImplementation() [with T = double; Descriptor = plb::descriptors::ForcedD3Q19Descriptor]
+         COM     24,000    24,000    0.55     0.0          22.79  void hemo::HemoCell::iterate()
+         USR     24,000    24,000  429.19     9.3       17883.03  void hemo::HemoCellFields::spreadParticleForce()
+         USR     24,000    24,000  149.75     3.3        6239.49  void hemo::HemoCellFields::advanceParticles()
+         MPI     12,210     4,440    0.01     0.0           3.25  MPI_Bcast
+         COM      4,944     4,944   52.52     1.1       10623.56  void hemo::HemoCellFields::syncEnvelopes()
+         MPI      4,800     4,800    2.28     0.0         475.00  MPI_Waitall
+         USR      4,800     4,800   73.28     1.6       15266.65  void hemo::HemoCellFields::interpolateFluidVelocity()
+         USR      4,800     4,800   13.14     0.3        2738.07  void hemo::HemoCellFields::deleteNonLocalParticles(int)
+         USR      4,248     4,248    0.00     0.0           0.46  char* tinyxml2::XMLDocument::Identify(char*, tinyxml2::XMLNode**)
+         USR      2,352     2,352    0.00     0.0           0.32  char* tinyxml2::StrPair::ParseName(char*)
+         USR      2,352     2,352    0.00     0.0           0.23  char* tinyxml2::XMLElement::ParseAttributes(char*, int*)
+         USR      1,824     1,824    0.00     0.0           0.37  char* tinyxml2::StrPair::ParseText(char*, const char*, int, int*)
+         MPI      1,782       648    0.72     0.0        1112.66  MPI_Barrier
+         MPI        132        48    0.19     0.0        3989.70  MPI_Allgather
+         MPI        132        48    0.01     0.0         289.34  MPI_Allgatherv
+      SCOREP         41        24   44.03     1.0     1834499.49  cube
+         MPI         24        24    0.00     0.0           4.30  MPI_Comm_rank
+         MPI         24        24    0.00     0.0           1.36  MPI_Comm_size
+         MPI         24        24   30.23     0.7     1259436.36  MPI_Init

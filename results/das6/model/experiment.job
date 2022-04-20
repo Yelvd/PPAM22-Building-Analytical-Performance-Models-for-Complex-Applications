@@ -1,0 +1,76 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH -t 00:15:00
+
+echo Init: "$(date)"
+
+echo user:              "$USER"
+echo hostname:          "$HOSTNAME"
+echo jobname:           "$SLURM_JOB_NAME"
+echo nodelist:          "$SLURM_JOB_NODELIST"
+echo tasks for job:     "$SLURM_NTASKS"
+echo tasks per node:    "$SLURM_NTASKS_PER_NODE"
+
+# load modules for hemocell
+#source "$HOME"/hemocell/scripts/das6_env.sh
+
+
+
+# load additional modules
+module restore hemocell
+module list
+
+# fill in example name
+example=cube
+config_file=$CONFIG_NAME
+output_dir=$(pwd)/output
+TMPDIR=/var/scratch/jvandijk/$SLURM_JOB_ID
+
+export SCOREP_ENABLE_TRACING=false
+export SCOREP_ENABLE_PROFILING=true
+export SCOREP_FILTERING_FILE=$HOME/filter.filter
+export SCOREP_EXPERIMENT_DIRECTORY=$output_dir/SCOREP-$SLURM_JOB_NAME-$SLURM_JOB_ID
+#export SCOREP_METRIC_PAPI=perf::L1-DCACHE-LOADS,L1-DCACHE-LOAD-MISSES
+
+# create directory tree incl config directory on scratch space
+mkdir -p $TMPDIR/$example
+wait
+
+# copy the required files into the scratch space
+src="$HOME/hemocell/examples/$example"
+dst="$TMPDIR/$example"
+for file in "$example"; do
+    cp "$src"/"$file" "$dst/$file" 
+done
+
+for file in "RBC.xml" "RBC.pos"; do
+    cp ./"$file" "$dst/$file"
+done
+
+cp "$config_file" "$dst/$config_file"
+wait
+
+# move into the scratch
+cd "$TMPDIR"/"$example" || exit 1
+
+# start the current job
+echo "Start:" "$(date)"
+mpirun "$example" "$config_file"
+wait
+echo "Done:" "$(date)"
+
+# copy back output
+cd "$TMPDIR" || exit 1
+ls -la "$TMPDIR"/"$example"
+
+# gather local storage from all nodes
+dst=$output_dir
+mkdir -p "$dst"
+
+
+# gather local storage from all nodes
+cp $TMPDIR/cube/tmp_1/log_1/logfile.statistics $dst/$SLURM_JOB_NAME-$SLURM_JOB_ID.stats
+
+rm -r $TMPDIR
+
+# echo "Complete:" "$(date)"
