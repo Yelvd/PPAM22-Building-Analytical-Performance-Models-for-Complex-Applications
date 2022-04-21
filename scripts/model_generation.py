@@ -32,6 +32,7 @@ CB_color_cycle = ['#377eb8', '#ff7f00', '#4daf4a',
 
 results_dir = "../figs/"
 fig_name= "model_prediction_das6"
+iterations = 1000
 
 def run_model(models, size, RBCs):
     total = 0
@@ -110,6 +111,10 @@ def model_to_json(models):
         for component in ["syncEnvelopes_comm"]:
             popt = models[component]
             smodel[component] = {'offset': popt[0], 'RBCs': popt[2], 'area': popt[1]}
+        
+    for k in smodel.keys():
+        for x in smodel[k].keys():
+            smodel[k][x] = smodel[k][x] / iterations
 
     return json.dumps(smodel)
 

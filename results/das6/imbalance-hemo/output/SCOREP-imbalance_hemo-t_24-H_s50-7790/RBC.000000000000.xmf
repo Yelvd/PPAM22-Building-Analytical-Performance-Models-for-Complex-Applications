@@ -1,0 +1,536 @@
+<?xml version="1.0" ?>
+<!DOCTYPE Xdmf SYSTEM "Xdmf.dtd" []>
+<Xdmf xmlns:xi="http://www.w3.org/2003/XInclude" Version="2.2">
+  <Domain>
+    <Grid Name="Domain" GridType="Collection">
+      <Grid Name="Subdomain 0 0" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="160000">
+          <DataItem Dimensions="160000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.0.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.0.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.0.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.0.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 1 1" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="320000">
+          <DataItem Dimensions="320000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.1.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.1.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.1.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.1.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 10 10" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="160000">
+          <DataItem Dimensions="160000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.10.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.10.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.10.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.10.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 11 11" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="320000">
+          <DataItem Dimensions="320000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.11.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.11.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.11.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.11.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 12 12" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="160000">
+          <DataItem Dimensions="160000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.12.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.12.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.12.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.12.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 13 13" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="320000">
+          <DataItem Dimensions="320000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.13.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.13.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.13.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.13.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 14 14" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="160000">
+          <DataItem Dimensions="160000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.14.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.14.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.14.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.14.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 15 15" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="320000">
+          <DataItem Dimensions="320000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.15.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.15.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.15.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.15.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 16 16" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="160000">
+          <DataItem Dimensions="160000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.16.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.16.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.16.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.16.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 17 17" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="320000">
+          <DataItem Dimensions="320000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.17.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.17.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.17.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.17.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 18 18" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="160000">
+          <DataItem Dimensions="160000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.18.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.18.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.18.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.18.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 19 19" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="320000">
+          <DataItem Dimensions="320000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.19.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.19.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.19.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.19.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 2 2" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="160000">
+          <DataItem Dimensions="160000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.2.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.2.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.2.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.2.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 20 20" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="160000">
+          <DataItem Dimensions="160000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.20.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.20.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.20.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.20.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 21 21" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="320000">
+          <DataItem Dimensions="320000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.21.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.21.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.21.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.21.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 22 22" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="160000">
+          <DataItem Dimensions="160000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.22.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.22.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.22.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.22.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 23 23" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="320000">
+          <DataItem Dimensions="320000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.23.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.23.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.23.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.23.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 3 3" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="320000">
+          <DataItem Dimensions="320000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.3.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.3.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.3.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.3.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 4 4" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="160000">
+          <DataItem Dimensions="160000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.4.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.4.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.4.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.4.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 5 5" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="320000">
+          <DataItem Dimensions="320000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.5.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.5.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.5.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.5.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 6 6" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="160000">
+          <DataItem Dimensions="160000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.6.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.6.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.6.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.6.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 7 7" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="320000">
+          <DataItem Dimensions="320000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.7.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.7.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.7.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.7.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 8 8" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="160000">
+          <DataItem Dimensions="160000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.8.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.8.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.8.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="80250 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.8.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="Subdomain 9 9" GridType="Uniform">
+        <Topology TopologyType="Triangle" NumberOfElements="320000">
+          <DataItem Dimensions="320000 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.9.h5:/Triangles
+          </DataItem>
+        </Topology>
+        <Geometry GeometryType="XYZ">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.9.h5:/Position
+          </DataItem>
+        </Geometry>
+        <Attribute Name="Position" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.9.h5:/Position
+          </DataItem>
+        </Attribute>
+        <Attribute Name="Total force" AttributeType="Vector">
+          <DataItem Dimensions="160500 3" Format="HDF">
+            ./hdf5/000000000000/RBC.000000000000.p.9.h5:/Total force
+          </DataItem>
+        </Attribute>
+      </Grid>
+    </Grid>
+  </Domain>
+</Xdmf>
