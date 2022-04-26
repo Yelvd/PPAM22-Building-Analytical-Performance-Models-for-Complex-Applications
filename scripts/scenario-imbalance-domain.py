@@ -16,12 +16,12 @@ CB_color_cycle = ['#377eb8', '#ff7f00', '#4daf4a',
                   '#999999', '#e41a1c', '#dede00']
 
 results_dir = "../figs/"
-fig_name= "scenario_imbalance_domain_das6"
-datadir = "../results/das6/imbalance-domain/output/"
+fig_name= "scenario_imbalance_domain"
+datadir = "../results/{}/imbalance-domain/output/"
 iterations = 500
-large_hemo = 250
 
-model = {"collideAndStream": {"offset": 0.007182424664883783, "N": 2.4337972047266724e-07}, "setExternalVector": {"offset": -0.0001567977687708435, "N": 2.1377646855844923e-08}, "collideAndStream_comm": {"offset": 0.0009894284527065694, "area": 2.0933177473340455e-07}, "syncEnvelopes": {"offset": 0.00011488342514662909, "RBCs": 3.408385367040535e-05}, "advanceParticles": {"offset": 0.0005015929210854835, "RBCs": 8.077362825627717e-05}, "applyConstitutiveModel": {"offset": -3.1492459389115265e-05, "RBCs": 2.790861572448882e-05}, "deleteNonLocalParticles": {"offset": 9.345415747055719e-06, "RBCs": 7.490896642043115e-06}, "spreadParticleForce": {"offset": 0.0010806997738769582, "RBCs": 0.00025126073806962414}, "interpolateFluidVelocity": {"offset": 0.0002598888412672542, "RBCs": 4.087327524040482e-05}, "syncEnvelopes_comm": {"offset": 0.0004055586584863523, "RBCs": 9.453519478319318e-06, "area": 1.4773915000808698e-08}}
+model_das  = {"collideAndStream": {"offset": 0.007586970083640878, "N": 2.4457985521310744e-07}, "setExternalVector": {"offset": -0.00017923400279257784, "N": 2.1311086952690122e-08}, "collideAndStream_comm": {"offset": 0.0009759617046640274, "area": 2.158405734410927e-07}, "syncEnvelopes_comm": {"offset": 0.00040164204605704534, "area": 1.591426069236932e-08, "RBCs": 9.369049445897329e-06}, "syncEnvelopes": {"offset": 0.00010545500938155938, "RBCs": 3.4645093627640815e-05}, "advanceParticles": {"offset": 0.0005292307787171433, "RBCs": 8.230150369077469e-05}, "applyConstitutiveModel": {"offset": -3.4074229702742984e-05, "RBCs": 2.794886344327952e-05}, "deleteNonLocalParticles": {"offset": 1.5278511490172454e-05, "RBCs": 7.705223394898288e-06}, "spreadParticleForce": {"offset": 0.0011070458465703972, "RBCs": 0.0002540657002879167}, "interpolateFluidVelocity": {"offset": 0.0002617313321741244, "RBCs": 4.1357788939953166e-05}} 
+model_snel = {"collideAndStream": {"offset": 0.006203986032170888, "N": 3.48500278199325e-07}, "setExternalVector": {"offset": 2.590788867295757e-05, "N": 4.3112912128790356e-08}, "collideAndStream_comm": {"offset": -0.0004748026755225183, "area": 9.05354320891726e-07}, "syncEnvelopes_comm": {"offset": 0.00048311863052151715, "area": 1.2670340585585472e-07, "RBCs": 3.5270019874035664e-05}, "syncEnvelopes": {"offset": -1.376780408857048e-05, "RBCs": 8.277622850171989e-05}, "advanceParticles": {"offset": 0.0004938208025793962, "RBCs": 0.00013978737497846716}, "applyConstitutiveModel": {"offset": -1.3439321724241892e-05, "RBCs": 4.364834747587415e-05}, "deleteNonLocalParticles": {"offset": 5.103523368379448e-05, "RBCs": 1.4884632423801813e-05}, "spreadParticleForce": {"offset": 0.0008050285810133388, "RBCs": 0.00039740608639334083}, "interpolateFluidVelocity": {"offset": 0.000130060575853455, "RBCs": 7.700985333371006e-05}} 
 
 particle_components = ['syncEnvelopes', 'syncEnvelopes_comm', 'advanceParticles', "applyConstitutiveModel", "deleteNonLocalParticles"]
 coupling_components = ["spreadParticleForce", "interpolateFluidVelocity"]
@@ -112,76 +112,108 @@ def unique(x, axis=0):
             new.append(tmp)
     return np.sort(np.array(new, dtype=object), axis=0)
 
+def print_latex_table(analysis_df, models, machines=['das6', 'snellius']):
+    analysis_df[0] = analysis_df[0].loc[analysis_df[0]['i'] == '1']
+    analysis_df[0] = analysis_df[0].loc[analysis_df[0]['component'] == 'total']
+    analysis_df[0] = analysis_df[0].loc[analysis_df[0].groupby('jobid', sort=False)['total'].idxmax()]
 
-def plot_analysis(analysis_df, model):
+    analysis_df[1] = analysis_df[1].loc[analysis_df[1]['i'] == '1']
+    analysis_df[1] = analysis_df[1].loc[analysis_df[1]['component'] == 'total']
+    analysis_df[1] = analysis_df[1].loc[analysis_df[1].groupby('jobid', sort=False)['total'].idxmax()]
 
-    analysis_df = analysis_df.loc[analysis_df['i'] == '1']
-    analysis_df = analysis_df.loc[analysis_df['component'] == 'total']
-    analysis_df = analysis_df.loc[analysis_df.groupby('jobid', sort=False)['total'].idxmax()]
 
-    print(analysis_df)
+    for i, m in enumerate(machines):
+        for j, H in enumerate(np.sort(pd.unique(analysis_df[i]['H']))):
+            tmpstr = m + "&"
+            tmp = analysis_df[i].loc[analysis_df[i]['H'] == H]
 
-    width = 5
-    offset = 0
-    fig = plt.figure(figsize=(30, 30))
+            model_res_naive = run_model(models[i], (100, 100, 100), np.array(tmp['RBCs'])[0] * 2, iterations)
+            model_res_3 = run_model(models[i], (100, 100, 50),  np.array(tmp['RBCs'])[0], iterations)
+
+            pred = model_res_naive['total']
+            res = np.mean(tmp['total'])
+            std = np.std(tmp['total'])
+            err = np.abs(pred - res) * (100 / res)
+            tmpstr += "{}\% ".format(H)
+            tmpstr += "& $\\num{{{0:.2f}}}".format(res)
+            tmpstr += "\pm \\num{{{0:.2f}}}$".format(std)
+            tmpstr += "& $\\num{{{0:.2f}}}$".format(pred)
+            tmpstr += "& $\\num{{{0:.2f}}}$".format(err)
+
+
+            pred = model_res_3['total'] * 3
+            err = np.abs(pred - res) * (100 / res)
+            tmpstr += "& $\\num{{{0:.2f}}}$".format(pred)
+            tmpstr += "& $\\num{{{0:.2f}}}$\\\\".format(err)
+            print(tmpstr)
+
+
+def plot_analysis(analysis_df, models, machines=['das6', 'snellius']):
+
+    analysis_df[0] = analysis_df[0].loc[analysis_df[0]['i'] == '1']
+    analysis_df[0] = analysis_df[0].loc[analysis_df[0]['component'] == 'total']
+    analysis_df[0] = analysis_df[0].loc[analysis_df[0].groupby('jobid', sort=False)['total'].idxmax()]
+
+    print(analysis_df[0])
+
+    analysis_df[1] = analysis_df[1].loc[analysis_df[1]['i'] == '1']
+    analysis_df[1] = analysis_df[1].loc[analysis_df[1]['component'] == 'total']
+    analysis_df[1] = analysis_df[1].loc[analysis_df[1].groupby('jobid', sort=False)['total'].idxmax()]
+
+    print(analysis_df[0])
+
+    width = 0.15
+    fig = plt.figure(figsize=(15, 15))
     ax = fig.add_subplot(2, 1, 1)
+    exp = []
 
-    for i, H in enumerate(np.sort(pd.unique(analysis_df['H']))):
+    for i, m in enumerate(machines):
+
         offset = -width
-        tmp = analysis_df.loc[analysis_df['H'] == H]
         legend_handels = []
+        for j, H in enumerate(np.sort(pd.unique(analysis_df[i]['H']))):
+            tmp = analysis_df[i].loc[analysis_df[i]['H'] == H]
 
-        model_res_naive = run_model(model, (100, 100, 100), np.array(tmp['RBCs'])[0] * 2, iterations)
-        model_res   = run_model(model, (150,100,100), np.array(tmp['RBCs'])[0] * 3, iterations)
-        model_res_3 = run_model(model, (100, 100, 50),  np.array(tmp['RBCs'])[0], iterations)
-        # model_res = run_model(model, np.array(tmp_imbalance['size'])[0], np.array(tmp_balance_18['RBCs'])[0], mult=3)
+            model_res_naive = run_model(models[i], (100, 100, 100), np.array(tmp['RBCs'])[0] * 2, iterations)
+            model_res   = run_model(models[i], (150,100,100), np.array(tmp['RBCs'])[0] * 3, iterations)
+            model_res_3 = run_model(models[i], (100, 100, 50),  np.array(tmp['RBCs'])[0], iterations)
+            # model_res = run_model(model, np.array(tmp_imbalance['size'])[0], np.array(tmp_balance_18['RBCs'])[0], mult=3)
 
-        plt.errorbar(i, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=30, color='k', fmt=".", capsize=5, lw=1)
-        plt.errorbar(i, model_res_naive['total'], yerr=0, ms=30, color=CB_color_cycle[0], fmt="x", capsize=5, lw=1)
-        plt.errorbar(i, model_res['total'], yerr=0, ms=30, color=CB_color_cycle[0], fmt="^", capsize=5, lw=1)
-        plt.errorbar(i, model_res_3['total']*3, yerr=0, ms=30, color=CB_color_cycle[0], fmt="*", capsize=5, lw=1)
+            plt.errorbar(i * len(machines) + j, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=30, color=CB_color_cycle[0], fmt=".", capsize=5, lw=1, zorder=1)
+            plt.plot(i * len(machines) + j, model_res_naive['total'], ms=20, color=CB_color_cycle[1], marker="x", lw=0)
+            plt.plot(i * len(machines) + j, model_res['total'], ms=20, color=CB_color_cycle[2], marker="x", lw=0)
+            # plt.errorbar(i, model_res['total'], yerr=0, ms=30, color=CB_color_cycle[0], fmt="^", capsize=5, lw=1)
 
-        offset = width
-        legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[i], lw=0, marker='.', ms=20, label='H{}%'.format(H)))
+            offset = width
+            # legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[j], lw=0, marker='.', ms=20, label='H{}%'.format(H)))
+            exp.append("{}: H{}\%".format(m, H))
 
-
-    # legend_handels = []
-    legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='.', ms=20, label='Results imbalance'))
-    # legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[0], lw=0, marker='*', ms=20, label='Results H9%'))        
-    # legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[0], lw=0, marker='^', ms=20, label='Results H18%'))      
-    legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='x', ms=20, label='Prediction naive'))
-    legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='^', ms=20, label='Prediction big subdomain'))
-    legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='*', ms=20, label='Prediction x3'))        
-
-    # legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[2], lw=0, marker='x', ms=20, label='Prediction 18%'))
-    # legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[3], lw=0, marker='x', ms=20, label='Prediction 9%'))
-    # for j, h in enumerate(np.sort(pd.unique(tmp['H']))):
-
+    legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[0], lw=0, marker='.', ms=10, label='Results imbalance'))
+    legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[1], lw=0, marker='x', ms=10, label='Prediction naive'))
+    # legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='^', ms=20, label='Prediction big subdomain'))
+    legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[2], lw=0, marker='x', ms=10, label='Prediction x3'))
 
 
     plt.rcParams.update({'font.size': 20})
-    # plt.rcParams.update({'axes.linewidth': 5})
     plt.rcParams.update({'font.weight': 'bold'})
-    # plt.rcParams.update({'font.size': 20})
 
     plt.legend(handles=legend_handels)
-    # plt.legend()
-    # ax.set_yscale('log')
-    plt.ylim(0, 700)
+    plt.ylim(0)
+    # plt.xlim(-.5, 1.5)
     plt.ylabel("Time in Seconds")
     plt.xlabel("processes")
     plt.title("Hematocrit imbalance snellius (1 node, 128 processes)")
-    # plt.xticks(pd.unique(tmpdf['nthreads']))
-    # plt.tight_layout()
-    plt.xticks(range(np.unique(np.sort(analysis_df['H'])).size), [ "H - {}".format(x)  for x in np.sort(pd.unique(analysis_df['H']))])
+    # plt.xticks(range(np.unique(np.sort(analysis_df['H'])).size), [ "H - {}".format(x)  for x in np.sort(pd.unique(analysis_df['H']))])
+    plt.xticks(np.arange(len(exp)), exp, rotation=30)  # Set text labels and properties.
+    # plt.xticks(range(machines), machines)
     plt.savefig(results_dir + fig_name + ".pdf", bbox_inches='tight')
-    
 
 
 if __name__ == "__main__":
-    results_df, exp_df = model_generation.load_data(datadir)
-    analysis_df = pd.merge(results_df, exp_df, on=['jobid'], how="left")
+    results_df_das, exp_df_das = model_generation.load_data(datadir.format("das6"))
+    results_df_snel, exp_df_snel = model_generation.load_data(datadir.format("snellius"))
+    analysis_df_das = pd.merge(results_df_das, exp_df_das, on=['jobid'], how="left")
+    analysis_df_snel = pd.merge(results_df_snel, exp_df_snel, on=['jobid'], how="left")
 
-    # print(analysis_df)
-
-    plot_analysis(analysis_df, model)
+    plot_analysis([analysis_df_das, analysis_df_snel], [model_das, model_snel])
+    print_latex_table([analysis_df_das, analysis_df_snel], [model_das, model_snel])

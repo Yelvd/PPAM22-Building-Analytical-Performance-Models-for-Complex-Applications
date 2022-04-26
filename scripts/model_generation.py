@@ -1,4 +1,6 @@
 # %matplotlib widget
+import getopt
+import sys
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -31,8 +33,9 @@ CB_color_cycle = ['#377eb8', '#ff7f00', '#4daf4a',
                   '#999999', '#e41a1c', '#dede00']
 
 results_dir = "../figs/"
-fig_name= "model_prediction_das6"
-iterations = 1000
+machine=""
+fig_name= "model_prediction_{}"
+iterations = 1
 
 def run_model(models, size, RBCs):
     total = 0
@@ -102,21 +105,21 @@ def model_to_json(models):
         for component in ["collideAndStream_comm"]:
             res = models[component]
             smodel[component] = {'offset': res.intercept, 'area': res.slope}
+
+        for component in ["syncEnvelopes_comm"]:
+            res = models[component]
+            smodel[component] = {'offset': res[0], 'area': res[1], 'RBCs': res[2]}
             
         for component in ["syncEnvelopes", "advanceParticles", "applyConstitutiveModel", "deleteNonLocalParticles", "spreadParticleForce", "interpolateFluidVelocity"]:
             res = models[component]
             smodel[component] = {'offset': res.intercept, 'RBCs': res.slope}
 
-            
-        for component in ["syncEnvelopes_comm"]:
-            popt = models[component]
-            smodel[component] = {'offset': popt[0], 'RBCs': popt[2], 'area': popt[1]}
-        
+
     for k in smodel.keys():
         for x in smodel[k].keys():
             smodel[k][x] = smodel[k][x] / iterations
 
-    return json.dumps(smodel)
+    return smodel
 
 
 def load_data(resultsdir):
@@ -148,7 +151,7 @@ def plot_validation(testing_df, model, name):
     testing_df = testing_df.loc[testing_df.groupby('jobid', sort=False)['total'].idxmax()]
     testing_df['sizestr'] = ["({}, {}, {})".format(x, y, z) for (x, y, z) in testing_df['largest_subdomain']]
 
-    fig = plt.figure(figsize=(30, 30))
+    fig = plt.figure(figsize=(15, 15))
     ax = fig.add_subplot(2, 1, 1)
 
     fit_exp_df = testing_df.sort_values("N")
@@ -167,28 +170,26 @@ def plot_validation(testing_df, model, name):
             tmp = testing_df.loc[testing_df['h'] == H]
             tmp = tmp.loc[tmp['largest_subdomain'] == s]
             
-            plt.errorbar(i - offset, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=40, color=CB_color_cycle[hi], fmt=".", capsize=5, lw=1)
-            plt.plot(i - offset, run_model(model, s, r), 'x', color=CB_color_cycle[hi], ms=35)
+            plt.errorbar(i - offset, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=30, color=CB_color_cycle[hi], fmt=".", capsize=5, lw=1)
+            plt.plot(i - offset, run_model(model, s, r), 'x', color=CB_color_cycle[hi], ms=20)
             
             offset -= stride
             legend_handels.append( Line2D([0], [0], color=CB_color_cycle[hi], lw=0, marker='o', ms=10, label='H{}\%'.format(H)))
             # legend_handels.append( Line2D([0], [0], color=CB_color_cycle[hi], lw=0, marker='x', label='H{}\ Prediction%'.format(H)))
-            pred = run_model(model, s, r)
-            res = np.mean(tmp['total'])
-            std = np.std(tmp['total'])
-            err = np.abs(pred - res) * (100 / res)
 
-    legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='x', ms=20, label='Model Prediction'.format(H)))        
-    legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='o', ms=20, label='Empirical Results'.format(H)))
+    legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='x', ms=10, label='Model Prediction'.format(H)))        
+    legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='o', ms=10, label='Empirical Results'.format(H)))
+
+    # plt.grid(True, which="both", ls="-", color='0.65')
 
     plt.rcParams.update({'font.size': 20})
     # plt.rcParams.update({'axes.linewidth': 5})
     plt.rcParams.update({'font.weight': 'bold'})
     # plt.rcParams.update({'font.size': 20})
 
-    plt.legend(handles=legend_handels)
+    plt.legend(handles=legend_handels, loc='lower right')
     ax.set_yscale('log')
-    plt.ylim(10, 1000)
+    plt.ylim(0.01, 15 ** 3) 
     plt.ylabel("Time in Seconds")
     plt.xlabel("Domain Size in µm (x, y, z)")
     # plt.title("Model Verification on DAS-6 (1 node, 24 processes)")
@@ -225,25 +226,84 @@ def gen_validation_table(testing_df, model):
             res = np.mean(tmp['total'])
             std = np.std(tmp['total'])
             err = np.abs(pred - res) * (100 / res)
-            tmpstr = "{} & {}\% ".format(np.array(tmp["largest_subdomain"])[0],  H, )
-            tmpstr += "& $\\num{{{0:.4f}}}".format(res)
-            tmpstr += "\pm \\num{{{0:4f}}}".format(std)
-            tmpstr += "$& $\\num{{{0:.4f}}}".format(pred)
-            tmpstr += "$ & $\\num{{{0:.4f}}}$\\\\".format(err)
+            st = np.array(tmp["largest_subdomain"])[0]
+            stmp = "({}, {}, {})".format(st[0] *.5, st[1] *.5, st[2] *.5)
+            tmpstr = "{} & {}\% ".format(stmp,  H, )
+            tmpstr += "& $\\num{{{0:.2f}}}".format(res)
+            tmpstr += "\pm \\num{{{0:.2f}}}".format(std)
+            tmpstr += "$& $\\num{{{0:.2f}}}".format(pred)
+            tmpstr += "$ & $\\num{{{0:.2f}}}$\\\\".format(err)
             print(tmpstr)
 
+def print_model_latex(model):
+    model = model_to_json(model)
+
+    for k in model.keys():
+        tmpstr = '{} & '.format(k)
+
+        tmpstr += "$"
+        tmpstr += "\\num{{{0:.2g}}}".format(model[k]['offset'])
+        if 'N' in model[k].keys():
+            tmpstr += " + V \\times \\num{{{0:.2g}}}".format(model[k]['N'])
+        if 'area' in model[k].keys():
+            tmpstr += " + SA \\times \\num{{{0:.2g}}}".format(model[k]['area'])
+        if 'RBCs' in model[k].keys():
+            tmpstr += " + RBCs \\times \\num{{{0:.2g}}}".format(model[k]['RBCs']) 
+        tmpstr += "$\\\\"
+        print(tmpstr)
+    pass
 
 def validate_model(testing_df, model):
     gen_validation_table(testing_df, model)
     plot_validation(testing_df, model, fig_name)
 
+def main(argv):
+    global fig_name
+    global machine
+    global results_dir
+    global iterations
+    datadir = ""
+    try:
+        opts, args = getopt.getopt(argv,"m:r:o:ds",["ifile=","ofile="])
+    except getopt.GetoptError:
+        print ('test.py -i <inputfile> -o <outputfile>')
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
+            sys.exit()
+        elif opt in ("-o"):
+            results_dir = arg
+        elif opt in ("-d"):
+            machine = "das6"
+            iterations = 1000
+        elif opt in ("-s"):
+            machine = "snellius" 
+            iterations = 500
+        elif opt in ("-r"):
+            datadir = arg
 
-if __name__ == "__main__":
-    resultsdir = "../results/das6/model/results/"
-    results_df, exp_df = load_data(resultsdir)
+    fig_name = fig_name.format(machine) 
+    datadir  = "../results/{}/model/results/".format(machine)
+    if datadir == "":
+        print("no data dir given")
+        sys.exit(1)
+    if machine == "":
+        print("no machine name given")
+        sys.exit(1)
 
-    fitting_sizes = ["s1", "s3", "s5", "s6", "s8"]
-    testing_sizes = ["s2", "s4", "s7", "s9"]
+    results_df, exp_df = load_data(datadir)
+
+    if machine == "das6":
+        fitting_sizes = ["s5", "s1", "s3", "s6", "s7", 's8']
+        testing_sizes = ["s2", "s4", "s8", "s9"]
+        # testing_sizes = testing_sizes + fitting_sizes
+    if machine == "snellius":
+        fitting_sizes = ["s1", "s3", "s5", "s8", "s9", "s11", "s12", 's10']
+        testing_sizes = ["s2", "s4", "s7", "s14"]
+
+    # testing_sizes = testing_sizes + fitting_sizes
+    
+    print(np.unique(exp_df['s']))
 
     fitting_jobs = exp_df.loc[exp_df['s'].isin(fitting_sizes)]['jobid']
     testing_jobs = exp_df.loc[exp_df['s'].isin(testing_sizes)]['jobid']
@@ -254,7 +314,16 @@ if __name__ == "__main__":
     fitting_df = pd.merge(fitting_df, exp_df, on=['jobid'], how="left")
     testing_df = pd.merge(testing_df, exp_df, on=['jobid'], how="left")
 
+    print(fitting_df)
+
     model = calibrate_model(fitting_df)
     validate_model(testing_df, model)
 
-    print(model_to_json(model))
+    print()
+    print(json.dumps(model_to_json(model)))
+    print()
+    print_model_latex(model)
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

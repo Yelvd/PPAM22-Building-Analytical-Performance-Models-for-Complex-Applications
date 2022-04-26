@@ -1,0 +1,150 @@
+Init: Thu Apr 21 19:44:42 CEST 2022
+user: jellevd
+hostname: tcn369
+jobname: single-node-128-s7-h014
+nodelist: tcn369
+tasks for job: 128
+tasks per node: 128
+Restoring modules from user's hemocell
+
+Currently Loaded Modules:
+  1) 2021                             17) SIONlib/1.7.6-GCCcore-10.3.0-tools
+  2) GCCcore/10.3.0                   18) OTF2/2.3-GCCcore-10.3.0
+  3) ncurses/6.2-GCCcore-10.3.0       19) PDT/3.25.1-GCCcore-10.3.0
+  4) zlib/1.2.11-GCCcore-10.3.0       20) CMake/3.20.1-GCCcore-10.3.0
+  5) bzip2/1.0.8-GCCcore-10.3.0       21) GCC/10.3.0
+  6) OpenSSL/1.1                      22) HDF5/1.10.7-gompi-2021a
+  7) cURL/7.76.0-GCCcore-10.3.0       23) numactl/2.0.14-GCCcore-10.3.0
+  8) XZ/5.2.5-GCCcore-10.3.0          24) libxml2/2.9.10-GCCcore-10.3.0
+  9) libarchive/3.5.1-GCCcore-10.3.0  25) libpciaccess/0.16-GCCcore-10.3.0
+ 10) binutils/2.36.1-GCCcore-10.3.0   26) hwloc/2.4.1-GCCcore-10.3.0
+ 11) gompi/2021a                      27) libevent/2.1.12-GCCcore-10.3.0
+ 12) Szip/2.1.1-GCCcore-10.3.0        28) UCX/1.10.0-GCCcore-10.3.0
+ 13) CubeLib/4.6-GCCcore-10.3.0       29) libfabric/1.12.1-GCCcore-10.3.0
+ 14) CubeWriter/4.6-GCCcore-10.3.0    30) OpenMPI/4.1.1-GCC-10.3.0
+ 15) libunwind/1.4.0-GCCcore-10.3.0   31) Score-P/7.0-gompi-2021a
+ 16) OPARI2/2.0.6-GCCcore-10.3.0      32) PAPI/6.0.0.1-GCCcore-10.3.0
+
+ 
+
+Configfile: current-config.xml
+Configfile: current-config.xml
+cp: cannot stat 'PLT.pos': No such file or directory
+Start: Thu Apr 21 19:44:46 CEST 2022
+(HemoCell) (Config) reading current-config.xml
+ _   _   ____   __  __   _____    ___   ____   __     __ 
+( )_( ) ( ___) (  \/  ) (  _  )  / __) ( ___) (  )   (  )
+ ) _ (   )__)   )    (   )(_)(  ( (__   )__)   )(__   )(__ 
+(_) (_) (____) (_/\/\_) (_____)  \___) (____) (____) (____) 
+                         v.2.3
+
+(unbounded) (Parameters) calculating flow parameters
+(HemoCell) dt is set to *auto*. Tau will be set to 1!
+(HemoCell) System parameters:
+	 dx: 	5e-07
+	 dt: 	3.78788e-08
+	 dm: 	1.28125e-16
+	 dN: 	4.4649e-08
+	 tau: 	1
+	 nu_lbm: 	0.166667
+	 u_lb_max: 	7.57576e-07
+	 f_limit: 	0.00111985
+(unbounded) (Fluid) Initializing Palabos Fluid Field
+(HemoCell) (Fluid) Setting Fluid Equilibrium
+Size of the multi-block:     400-by-800-by-800
+Number of atomic-blocks:     128
+Smallest atomic-block:       100-by-200-by-100
+Largest atomic-block:        100-by-200-by-100
+Number of allocated cells:   256 million
+Fraction of allocated domain: 100 percent
+
+(Hemocell) (HemoCellFields) (Init) particle envelope: 25 [lu]
+Cellfield  (+ material model) of RBC
+  Volume :90 µm³ VolumeFraction of lsp per fluid node: 1.1215 %
+  Nvertex: 642
+(Cell-mechanics model) High Order model parameters for RBC cellfield
+	 k_link:   0.000183679
+	 k_area:   9.18393e-07
+	 k_bend: : 1.46943e-05
+	 k_volume: 3.67357e-06
+	 eta_m:    0
+	 mean_edge:1.00019
+	 N faces:  1280
+(HemoCell) (Timescale Seperation) Setting seperation of RBC to 20 timesteps
+(HemoCell) (Timescale separation) Setting update separation of all particles to 5 timesteps
+(HemoCell) (CellField) Setting output variables for RBC cells
+(HemoCell) (Fluid) Setting output variables for fluid field
+(HemoCell) (CellField) Loading particle positions 
+(readPositionsBloodCells) Reading particle positions...
+(readPositionsBloodCells) Particle count in file (RBC): 102400.
+(HemoCell) (Output) writing output at timestep 0 (0 s). Approx. performance: 0.00 s / iteration.
+(unbounded) fresh start: warming up cell-free fluid domain for 0 iterations...
+(unbounded) Starting simulation...
+ | RBC Volume ratio [x100%]: 1.54
+(main)   nCells (global) = 51200
+(HemoCell) (SanityCheck) Performing Sanity check on simulation parameters and setup
+(HemoCell) WARNING: Force limit active at 50 pN. Results can be inaccurate due to force capping.
+Size of the multi-block:     400-by-800-by-800
+Number of atomic-blocks:     128
+Smallest atomic-block:       100-by-200-by-100
+Largest atomic-block:        100-by-200-by-100
+Number of allocated cells:   256 million
+Fraction of allocated domain: 100 percent
+(SanityCheck) one of the dimensions of the largest atomic block is more than 25.
+  This is inefficient, The best performance is with 16x16x16 blocks.
+  It is recommended to adjust the number of processors or the sparseBlockStructure accordingly.
+Hemocell Profiler Statistics (Only Process 0):
+HemoCell: 625.429000
+ MpiReceive: 0.000000
+ MpiSend: 0.000000
+ deleteIncompleteCells: 0.078000
+ iterate: 608.565000
+  advanceParticles: 25.150000
+  applyConstitutiveModel: 8.186000
+  collideAndStream: 406.086000
+  deleteNonLocalParticles: 2.503000
+  interpolateFluidVelocity: 15.642000
+  setExternalVector: 37.207000
+  spreadParticleForce: 82.637000
+  syncEnvelopes: 31.127000
+   MpiReceive: 3.976000
+   MpiSend: 4.569000
+ output: 6.731000
+  applyConstitutiveModel: 0.270000
+  deleteIncompleteCells: 0.025000
+  separateForceVectors: 0.331000
+  syncEnvelopes: 0.878000
+   MpiReceive: 0.077000
+   MpiSend: 0.245000
+  unifyForceVectors: 0.091000
+  updateResidenceTime: 0.005000
+  writeOutput: 3.766000
+   writeCellCSVInfo: 1.673000
+    syncEnvelopes: 0.814000
+     MpiReceive: 0.044000
+     MpiSend: 0.052000
+   writeCellField: 1.594000
+   writeFluidField: 0.487000
+ syncEnvelopes: 1.749000
+  MpiReceive: 0.202000
+  MpiSend: 0.378000
+(main) Simulation finished :) 
+cube: ../src/measurement/SCOREP_Memory.c:507: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 4 with PID 1094525 on node tcn369 exited on signal 6 (Aborted).
+--------------------------------------------------------------------------
+Done: Thu Apr 21 19:55:31 CEST 2022
+total 84765
+drwxr-xr-x 4 jellevd jellevd     4096 Apr 21 19:45 .
+drwxr-xr-x 3 jellevd jellevd     4096 Apr 21 19:44 ..
+-rw-r--r-- 1 jellevd jellevd  2577287 Apr 21 19:44 RBC.pos
+-rw-r--r-- 1 jellevd jellevd     1020 Apr 21 19:44 RBC.xml
+drwxr-xr-x 2 jellevd jellevd     4096 Apr 21 19:55 SCOREP-single-node-128-s7-h014-792587
+-rwxr-xr-x 1 jellevd jellevd 84207880 Apr 21 19:44 cube
+-rw-r--r-- 1 jellevd jellevd     1653 Apr 21 19:44 current-config.xml
+drwxr-xr-x 5 jellevd jellevd     4096 Apr 21 19:45 tmp_1
+Complete: Thu Apr 21 19:55:31 CEST 2022

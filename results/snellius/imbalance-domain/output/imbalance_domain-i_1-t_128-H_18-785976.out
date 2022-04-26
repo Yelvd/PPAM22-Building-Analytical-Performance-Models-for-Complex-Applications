@@ -1,0 +1,177 @@
+Init: Wed Apr 20 16:33:34 CEST 2022
+user: jellevd
+hostname: tcn369
+jobname: imbalance_domain-i_1-t_128-H_18
+nodelist: tcn369
+tasks for job: 128
+tasks per node: 128
+Restoring modules from user's hemocell
+
+Currently Loaded Modules:
+  1) 2021                             17) SIONlib/1.7.6-GCCcore-10.3.0-tools
+  2) GCCcore/10.3.0                   18) OTF2/2.3-GCCcore-10.3.0
+  3) ncurses/6.2-GCCcore-10.3.0       19) PDT/3.25.1-GCCcore-10.3.0
+  4) zlib/1.2.11-GCCcore-10.3.0       20) CMake/3.20.1-GCCcore-10.3.0
+  5) bzip2/1.0.8-GCCcore-10.3.0       21) GCC/10.3.0
+  6) OpenSSL/1.1                      22) HDF5/1.10.7-gompi-2021a
+  7) cURL/7.76.0-GCCcore-10.3.0       23) numactl/2.0.14-GCCcore-10.3.0
+  8) XZ/5.2.5-GCCcore-10.3.0          24) libxml2/2.9.10-GCCcore-10.3.0
+  9) libarchive/3.5.1-GCCcore-10.3.0  25) libpciaccess/0.16-GCCcore-10.3.0
+ 10) binutils/2.36.1-GCCcore-10.3.0   26) hwloc/2.4.1-GCCcore-10.3.0
+ 11) gompi/2021a                      27) libevent/2.1.12-GCCcore-10.3.0
+ 12) Szip/2.1.1-GCCcore-10.3.0        28) UCX/1.10.0-GCCcore-10.3.0
+ 13) CubeLib/4.6-GCCcore-10.3.0       29) libfabric/1.12.1-GCCcore-10.3.0
+ 14) CubeWriter/4.6-GCCcore-10.3.0    30) OpenMPI/4.1.1-GCC-10.3.0
+ 15) libunwind/1.4.0-GCCcore-10.3.0   31) Score-P/7.0-gompi-2021a
+ 16) OPARI2/2.0.6-GCCcore-10.3.0      32) PAPI/6.0.0.1-GCCcore-10.3.0
+
+ 
+
+Hemocell-case: cube-imbalance
+Configfile: config-128.xml
+RBC file: RBC-h018.pos
+cp: cannot stat 'PLT.pos': No such file or directory
+Start: Wed Apr 20 16:33:38 CEST 2022
+(HemoCell) (Config) reading config-128.xml
+ _   _   ____   __  __   _____    ___   ____   __     __ 
+( )_( ) ( ___) (  \/  ) (  _  )  / __) ( ___) (  )   (  )
+ ) _ (   )__)   )    (   )(_)(  ( (__   )__)   )(__   )(__ 
+(_) (_) (____) (_/\/\_) (_____)  \___) (____) (____) (____) 
+                         v.2.3
+
+(unbounded) (Parameters) calculating flow parameters
+(HemoCell) dt is set to *auto*. Tau will be set to 1!
+(HemoCell) System parameters:
+	 dx: 	5e-07
+	 dt: 	3.78788e-08
+	 dm: 	1.28125e-16
+	 dN: 	4.4649e-08
+	 tau: 	1
+	 nu_lbm: 	0.166667
+	 u_lb_max: 	7.57576e-07
+	 f_limit: 	0.00111985
+(unbounded) (Fluid) Initializing Palabos Fluid Field
+(HemoCell) (Fluid) Setting Fluid Equilibrium
+Size of the multi-block:     400-by-400-by-800
+Number of atomic-blocks:     256
+Smallest atomic-block:       100-by-50-by-100
+Largest atomic-block:        100-by-50-by-100
+Number of allocated cells:   128 million
+Fraction of allocated domain: 100 percent
+
+(Hemocell) (HemoCellFields) (Init) particle envelope: 25 [lu]
+Cellfield  (+ material model) of RBC
+  Volume :90 µm³ VolumeFraction of lsp per fluid node: 1.1215 %
+  Nvertex: 642
+(Cell-mechanics model) High Order model parameters for RBC cellfield
+	 k_link:   0.000183679
+	 k_area:   9.18393e-07
+	 k_bend: : 1.46943e-05
+	 k_volume: 3.67357e-06
+	 eta_m:    0
+	 mean_edge:1.00019
+	 N faces:  1280
+(HemoCell) (Timescale Seperation) Setting seperation of RBC to 20 timesteps
+(HemoCell) (Timescale separation) Setting update separation of all particles to 5 timesteps
+(HemoCell) (CellField) Setting output variables for RBC cells
+(HemoCell) (Fluid) Setting output variables for fluid field
+(HemoCell) (CellField) Loading particle positions 
+(readPositionsBloodCells) Reading particle positions...
+(readPositionsBloodCells) Particle count in file (RBC): 128000.
+(HemoCell) (Output) writing output at timestep 0 (0 s). Approx. performance: 0.00 s / iteration.
+(unbounded) fresh start: warming up cell-free fluid domain for 0 iterations...
+(unbounded) Starting simulation...
+ | RBC Volume ratio [x100%]: 1.925
+(main)   nCells (global) = 32000
+(HemoCell) (SanityCheck) Performing Sanity check on simulation parameters and setup
+(HemoCell) WARNING: The number of atomic neighbours is suspiciously high: 44 Usually it should be < 30 ! Check the atomic block structure!
+(HemoCell) WARNING: Force limit active at 50 pN. Results can be inaccurate due to force capping.
+Size of the multi-block:     400-by-400-by-800
+Number of atomic-blocks:     256
+Smallest atomic-block:       100-by-50-by-100
+Largest atomic-block:        100-by-50-by-100
+Number of allocated cells:   128 million
+Fraction of allocated domain: 100 percent
+(SanityCheck) one of the dimensions of the largest atomic block is more than 25.
+  This is inefficient, The best performance is with 16x16x16 blocks.
+  It is recommended to adjust the number of processors or the sparseBlockStructure accordingly.
+Hemocell Profiler Statistics (Only Process 0):
+HemoCell: 628.805000
+ LocalCommunication: 0.000000
+ MpiReceive: 0.000000
+ MpiSend: 0.000000
+ deleteIncompleteCells: 0.142000
+ iterate: 609.171000
+  advanceParticles: 23.926000
+  applyConstitutiveModel: 7.366000
+  collideAndStream: 360.627000
+  deleteNonLocalParticles: 3.518000
+  interpolateFluidVelocity: 19.260000
+  setExternalVector: 19.197000
+  spreadParticleForce: 77.815000
+  syncEnvelopes: 97.433000
+   LocalCommunication: 37.811000
+   MpiReceive: 10.415000
+   MpiSend: 1.750000
+ output: 6.835000
+  applyConstitutiveModel: 0.298000
+  deleteIncompleteCells: 0.042000
+  separateForceVectors: 0.493000
+  syncEnvelopes: 1.612000
+   LocalCommunication: 0.300000
+   MpiReceive: 0.118000
+   MpiSend: 0.313000
+  unifyForceVectors: 0.134000
+  updateResidenceTime: 0.018000
+  writeOutput: 3.110000
+   writeCellCSVInfo: 1.506000
+    syncEnvelopes: 0.877000
+     LocalCommunication: 0.155000
+     MpiReceive: 0.077000
+     MpiSend: 0.075000
+   writeCellField: 1.188000
+   writeFluidField: 0.409000
+ syncEnvelopes: 3.038000
+  LocalCommunication: 0.518000
+  MpiReceive: 0.241000
+  MpiSend: 0.269000
+(main) Simulation finished :) 
+cube-imbalance: ../src/measurement/SCOREP_Memory.c:507: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 104 with PID 714341 on node tcn369 exited on signal 6 (Aborted).
+--------------------------------------------------------------------------
+Done: Wed Apr 20 16:44:27 CEST 2022
+total 85205
+drwxr-xr-x 4 jellevd jellevd     4096 Apr 20 16:33 .
+drwxr-xr-x 3 jellevd jellevd     4096 Apr 20 16:33 ..
+-rw-r--r-- 1 jellevd jellevd  2966407 Apr 20 16:33 RBC.pos
+-rw-r--r-- 1 jellevd jellevd     1020 Apr 20 16:33 RBC.xml
+drwxr-xr-x 2 jellevd jellevd     4096 Apr 20 16:44 SCOREP-imbalance_domain-i_1-t_128-H_18-785976
+-rw-r--r-- 1 jellevd jellevd     1653 Apr 20 16:33 config-128.xml
+-rwxr-xr-x 1 jellevd jellevd 84268072 Apr 20 16:33 cube-imbalance
+drwxr-xr-x 5 jellevd jellevd     4096 Apr 20 16:34 tmp_1
+/home/jellevd/hemocell/scripts
+/usr/bin/python3
+Created file: ./Fluid.000000000000.xmf
+RBC:
+Created file: ./RBC.000000000000.xmf
+Complete: Wed Apr 20 16:44:29 CEST 2022
+
+JOB STATISTICS
+==============
+Job ID: 785976
+Array Job ID: 785967_1
+Cluster: snellius
+User/Group: jellevd/jellevd
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 128
+CPU Utilized: 19:35:04
+CPU Efficiency: 83.08% of 23:34:24 core-walltime
+Job Wall-clock time: 00:11:03
+Memory Utilized: 121.82 GB
+Memory Efficiency: 51.98% of 234.38 GB

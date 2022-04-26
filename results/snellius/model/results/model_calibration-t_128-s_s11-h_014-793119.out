@@ -1,0 +1,295 @@
+Init: Thu Apr 21 23:19:00 CEST 2022
+user: jellevd
+hostname: tcn344
+jobname: single-node-128-s11-h014
+nodelist: tcn344
+tasks for job: 128
+tasks per node: 128
+Restoring modules from user's hemocell
+
+Currently Loaded Modules:
+  1) 2021                             17) SIONlib/1.7.6-GCCcore-10.3.0-tools
+  2) GCCcore/10.3.0                   18) OTF2/2.3-GCCcore-10.3.0
+  3) ncurses/6.2-GCCcore-10.3.0       19) PDT/3.25.1-GCCcore-10.3.0
+  4) zlib/1.2.11-GCCcore-10.3.0       20) CMake/3.20.1-GCCcore-10.3.0
+  5) bzip2/1.0.8-GCCcore-10.3.0       21) GCC/10.3.0
+  6) OpenSSL/1.1                      22) HDF5/1.10.7-gompi-2021a
+  7) cURL/7.76.0-GCCcore-10.3.0       23) numactl/2.0.14-GCCcore-10.3.0
+  8) XZ/5.2.5-GCCcore-10.3.0          24) libxml2/2.9.10-GCCcore-10.3.0
+  9) libarchive/3.5.1-GCCcore-10.3.0  25) libpciaccess/0.16-GCCcore-10.3.0
+ 10) binutils/2.36.1-GCCcore-10.3.0   26) hwloc/2.4.1-GCCcore-10.3.0
+ 11) gompi/2021a                      27) libevent/2.1.12-GCCcore-10.3.0
+ 12) Szip/2.1.1-GCCcore-10.3.0        28) UCX/1.10.0-GCCcore-10.3.0
+ 13) CubeLib/4.6-GCCcore-10.3.0       29) libfabric/1.12.1-GCCcore-10.3.0
+ 14) CubeWriter/4.6-GCCcore-10.3.0    30) OpenMPI/4.1.1-GCC-10.3.0
+ 15) libunwind/1.4.0-GCCcore-10.3.0   31) Score-P/7.0-gompi-2021a
+ 16) OPARI2/2.0.6-GCCcore-10.3.0      32) PAPI/6.0.0.1-GCCcore-10.3.0
+
+ 
+
+Configfile: current-config.xml
+Configfile: current-config.xml
+cp: cannot stat 'PLT.pos': No such file or directory
+Start: Thu Apr 21 23:19:04 CEST 2022
+(HemoCell) (Config) reading current-config.xml
+ _   _   ____   __  __   _____    ___   ____   __     __ 
+( )_( ) ( ___) (  \/  ) (  _  )  / __) ( ___) (  )   (  )
+ ) _ (   )__)   )    (   )(_)(  ( (__   )__)   )(__   )(__ 
+(_) (_) (____) (_/\/\_) (_____)  \___) (____) (____) (____) 
+                         v.2.3
+
+(unbounded) (Parameters) calculating flow parameters
+(HemoCell) dt is set to *auto*. Tau will be set to 1!
+(HemoCell) System parameters:
+	 dx: 	5e-07
+	 dt: 	3.78788e-08
+	 dm: 	1.28125e-16
+	 dN: 	4.4649e-08
+	 tau: 	1
+	 nu_lbm: 	0.166667
+	 u_lb_max: 	7.57576e-07
+	 f_limit: 	0.00111985
+(unbounded) (Fluid) Initializing Palabos Fluid Field
+(HemoCell) (Fluid) Setting Fluid Equilibrium
+Size of the multi-block:     100-by-50-by-50
+Number of atomic-blocks:     128
+Smallest atomic-block:       12-by-12-by-12
+Largest atomic-block:        13-by-13-by-13
+Number of allocated cells:   0.25 million
+Fraction of allocated domain: 100 percent
+
+(Hemocell) (HemoCellFields) (Init) particle envelope: 25 [lu]
+Cellfield  (+ material model) of RBC
+  Volume :90 µm³ VolumeFraction of lsp per fluid node: 1.1215 %
+  Nvertex: 642
+(Cell-mechanics model) High Order model parameters for RBC cellfield
+	 k_link:   0.000183679
+	 k_area:   9.18393e-07
+	 k_bend: : 1.46943e-05
+	 k_volume: 3.67357e-06
+	 eta_m:    0
+	 mean_edge:1.00019
+	 N faces:  1280
+(HemoCell) (Timescale Seperation) Setting seperation of RBC to 20 timesteps
+(HemoCell) (Timescale separation) Setting update separation of all particles to 5 timesteps
+(HemoCell) (CellField) Setting output variables for RBC cells
+(HemoCell) (Fluid) Setting output variables for fluid field
+(HemoCell) (CellField) Loading particle positions 
+(readPositionsBloodCells) Reading particle positions...
+(readPositionsBloodCells) Particle count in file (RBC): 102400.
+(HemoCell) (Output) writing output at timestep 0 (0 s). Approx. performance: 0.00 s / iteration.
+(unbounded) fresh start: warming up cell-free fluid domain for 0 iterations...
+(unbounded) Starting simulation...
+ | RBC Volume ratio [x100%]: 1.232
+(main)   nCells (global) = 40
+(HemoCell) (SanityCheck) Performing Sanity check on simulation parameters and setup
+(HemoCell) WARNING: The number of atomic neighbours is suspiciously high: 104 Usually it should be < 30 ! Check the atomic block structure!
+(HemoCell) WARNING: Force limit active at 50 pN. Results can be inaccurate due to force capping.
+Size of the multi-block:     100-by-50-by-50
+Number of atomic-blocks:     128
+Smallest atomic-block:       12-by-12-by-12
+Largest atomic-block:        13-by-13-by-13
+Number of allocated cells:   0.25 million
+Fraction of allocated domain: 100 percent
+(SanityCheck) one of the dimensions of the smallest atomic block is less than 16.
+  This is inefficient, The best performance is with 16x16x16 blocks.
+  It is recommended to adjust the number of processors or the sparseBlockStructure accordingly.
+Hemocell Profiler Statistics (Only Process 0):
+HemoCell: 1.977000
+ MpiReceive: 0.000000
+ MpiSend: 0.000000
+ deleteIncompleteCells: 0.001000
+ iterate: 1.156000
+  advanceParticles: 0.008000
+  applyConstitutiveModel: 0.013000
+  collideAndStream: 0.858000
+  deleteNonLocalParticles: 0.002000
+  interpolateFluidVelocity: 0.008000
+  setExternalVector: 0.015000
+  spreadParticleForce: 0.059000
+  syncEnvelopes: 0.189000
+   MpiReceive: 0.011000
+   MpiSend: 0.002000
+ output: 0.358000
+  applyConstitutiveModel: 0.000000
+  deleteIncompleteCells: 0.000000
+  separateForceVectors: 0.002000
+  syncEnvelopes: 0.034000
+   MpiReceive: 0.002000
+   MpiSend: 0.001000
+  unifyForceVectors: 0.001000
+  updateResidenceTime: 0.000000
+  writeOutput: 0.170000
+   writeCellCSVInfo: 0.079000
+    syncEnvelopes: 0.072000
+     MpiReceive: 0.000000
+     MpiSend: 0.000000
+   writeCellField: 0.016000
+   writeFluidField: 0.073000
+ syncEnvelopes: 0.049000
+  MpiReceive: 0.003000
+  MpiSend: 0.002000
+(main) Simulation finished :) 
+rank[0]:	 frequency = 2595125730 Hz
+rank[1]:	 frequency = 2595124533 Hz
+rank[2]:	 frequency = 2595124366 Hz
+rank[3]:	 frequency = 2595124431 Hz
+rank[4]:	 frequency = 2595124958 Hz
+rank[5]:	 frequency = 2595124925 Hz
+rank[6]:	 frequency = 2595125341 Hz
+rank[7]:	 frequency = 2595124647 Hz
+rank[8]:	 frequency = 2595124503 Hz
+rank[9]:	 frequency = 2595124630 Hz
+rank[10]:	 frequency = 2595124783 Hz
+rank[11]:	 frequency = 2595124486 Hz
+rank[12]:	 frequency = 2595125494 Hz
+rank[13]:	 frequency = 2595124596 Hz
+rank[14]:	 frequency = 2595124349 Hz
+rank[15]:	 frequency = 2595124735 Hz
+rank[16]:	 frequency = 2595125071 Hz
+rank[17]:	 frequency = 2595124607 Hz
+rank[18]:	 frequency = 2595124681 Hz
+rank[19]:	 frequency = 2595124221 Hz
+rank[20]:	 frequency = 2595124257 Hz
+rank[21]:	 frequency = 2595124567 Hz
+rank[22]:	 frequency = 2595124296 Hz
+rank[23]:	 frequency = 2595125259 Hz
+rank[24]:	 frequency = 2595124612 Hz
+rank[25]:	 frequency = 2595124660 Hz
+rank[26]:	 frequency = 2595125240 Hz
+rank[27]:	 frequency = 2595124554 Hz
+rank[28]:	 frequency = 2595124237 Hz
+rank[29]:	 frequency = 2595124270 Hz
+rank[30]:	 frequency = 2595124908 Hz
+rank[31]:	 frequency = 2595124669 Hz
+rank[32]:	 frequency = 2595124759 Hz
+rank[33]:	 frequency = 2595125177 Hz
+rank[34]:	 frequency = 2595124568 Hz
+rank[35]:	 frequency = 2595124794 Hz
+rank[36]:	 frequency = 2595124574 Hz
+rank[37]:	 frequency = 2595124649 Hz
+rank[38]:	 frequency = 2595124853 Hz
+rank[39]:	 frequency = 2595125377 Hz
+rank[40]:	 frequency = 2595124399 Hz
+rank[41]:	 frequency = 2595125381 Hz
+rank[42]:	 frequency = 2595124587 Hz
+rank[43]:	 frequency = 2595124695 Hz
+rank[44]:	 frequency = 2595124586 Hz
+rank[45]:	 frequency = 2595125028 Hz
+rank[46]:	 frequency = 2595124320 Hz
+rank[47]:	 frequency = 2595124673 Hz
+rank[48]:	 frequency = 2595124553 Hz
+rank[49]:	 frequency = 2595124503 Hz
+rank[50]:	 frequency = 2595125022 Hz
+rank[51]:	 frequency = 2595124655 Hz
+rank[52]:	 frequency = 2595124560 Hz
+rank[53]:	 frequency = 2595124376 Hz
+rank[54]:	 frequency = 2595124655 Hz
+rank[55]:	 frequency = 2595124874 Hz
+rank[56]:	 frequency = 2595124698 Hz
+rank[57]:	 frequency = 2595124669 Hz
+rank[58]:	 frequency = 2595125139 Hz
+rank[59]:	 frequency = 2595124533 Hz
+rank[60]:	 frequency = 2595124715 Hz
+rank[61]:	 frequency = 2595124336 Hz
+rank[62]:	 frequency = 2595124296 Hz
+rank[63]:	 frequency = 2595125457 Hz
+rank[64]:	 frequency = 2595124656 Hz
+rank[65]:	 frequency = 2595124224 Hz
+rank[66]:	 frequency = 2595125425 Hz
+rank[67]:	 frequency = 2595124322 Hz
+rank[68]:	 frequency = 2595124526 Hz
+rank[69]:	 frequency = 2595124911 Hz
+rank[70]:	 frequency = 2595124860 Hz
+rank[71]:	 frequency = 2595124690 Hz
+rank[72]:	 frequency = 2595124556 Hz
+rank[73]:	 frequency = 2595125301 Hz
+rank[74]:	 frequency = 2595124602 Hz
+rank[75]:	 frequency = 2595124831 Hz
+rank[76]:	 frequency = 2595124832 Hz
+rank[77]:	 frequency = 2595124362 Hz
+rank[78]:	 frequency = 2595124853 Hz
+rank[79]:	 frequency = 2595124765 Hz
+rank[80]:	 frequency = 2595124720 Hz
+rank[81]:	 frequency = 2595124818 Hz
+rank[82]:	 frequency = 2595124371 Hz
+rank[83]:	 frequency = 2595125226 Hz
+rank[84]:	 frequency = 2595125243 Hz
+rank[85]:	 frequency = 2595124415 Hz
+rank[86]:	 frequency = 2595124206 Hz
+rank[87]:	 frequency = 2595124631 Hz
+rank[88]:	 frequency = 2595124389 Hz
+rank[89]:	 frequency = 2595125169 Hz
+rank[90]:	 frequency = 2595124957 Hz
+rank[91]:	 frequency = 2595124885 Hz
+rank[92]:	 frequency = 2595124947 Hz
+rank[93]:	 frequency = 2595124803 Hz
+rank[94]:	 frequency = 2595124776 Hz
+rank[95]:	 frequency = 2595125360 Hz
+rank[96]:	 frequency = 2595124606 Hz
+rank[97]:	 frequency = 2595124831 Hz
+rank[98]:	 frequency = 2595124871 Hz
+rank[99]:	 frequency = 2595124579 Hz
+rank[100]:	 frequency = 2595124881 Hz
+rank[101]:	 frequency = 2595124956 Hz
+rank[102]:	 frequency = 2595125174 Hz
+rank[103]:	 frequency = 2595124364 Hz
+rank[104]:	 frequency = 2595124397 Hz
+rank[105]:	 frequency = 2595124276 Hz
+rank[106]:	 frequency = 2595125206 Hz
+rank[107]:	 frequency = 2595124211 Hz
+rank[108]:	 frequency = 2595125253 Hz
+rank[109]:	 frequency = 2595124319 Hz
+rank[110]:	 frequency = 2[Score-P] src/services/timer/SCOREP_Timer.c:390: Warning: Calculated timer (tsc) frequencies differ from average frequency (2595124500 Hz) by more than 25951 Hz. Consider using a timer with a fixed frequency like gettimeofday or clock_gettime. Prolonging the measurement duration might mitigate the frequency variations.
+595124386 Hz
+rank[111]:	 frequency = 2595124483 Hz
+rank[112]:	 frequency = 2595125385 Hz
+rank[113]:	 frequency = 2595124708 Hz
+rank[114]:	 frequency = 2595124900 Hz
+rank[115]:	 frequency = 2595124405 Hz
+rank[116]:	 frequency = 2595124589 Hz
+rank[117]:	 frequency = 2595124842 Hz
+rank[118]:	 frequency = 2595125200 Hz
+rank[119]:	 frequency = 2595125001 Hz
+rank[120]:	 frequency = 2595124853 Hz
+rank[121]:	 frequency = 2595124394 Hz
+rank[122]:	 frequency = 2595094723 Hz (outlier)
+rank[123]:	 frequency = 2595124353 Hz
+rank[124]:	 frequency = 2595125375 Hz
+rank[125]:	 frequency = 2595124245 Hz
+rank[126]:	 frequency = 2595124798 Hz
+rank[127]:	 frequency = 2595124783 Hz
+cube: ../src/measurement/SCOREP_Memory.c:507: SCOREP_Memory_GetLocalDefinitionPageManager: Assertion `is_initialized' failed.
+--------------------------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code. Per user-direction, the job has been aborted.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun noticed that process rank 81 with PID 2120010 on node tcn344 exited on signal 6 (Aborted).
+--------------------------------------------------------------------------
+Done: Thu Apr 21 23:19:25 CEST 2022
+total 81925
+drwxr-xr-x 4 jellevd jellevd     4096 Apr 21 23:19 .
+drwxr-xr-x 3 jellevd jellevd     4096 Apr 21 23:19 ..
+-rw-r--r-- 1 jellevd jellevd  2577287 Apr 21 23:19 RBC.pos
+-rw-r--r-- 1 jellevd jellevd     1020 Apr 21 23:19 RBC.xml
+drwxr-xr-x 2 jellevd jellevd     4096 Apr 21 23:19 SCOREP-single-node-128-s11-h014-793119
+-rwxr-xr-x 1 jellevd jellevd 84207880 Apr 21 23:19 cube
+-rw-r--r-- 1 jellevd jellevd     1651 Apr 21 23:19 current-config.xml
+drwxr-xr-x 5 jellevd jellevd     4096 Apr 21 23:19 tmp_1
+Complete: Thu Apr 21 23:19:25 CEST 2022
+
+JOB STATISTICS
+==============
+Job ID: 793119
+Array Job ID: 793117_1
+Cluster: snellius
+User/Group: jellevd/jellevd
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 128
+CPU Utilized: 00:00:06
+CPU Efficiency: 0.12% of 01:23:12 core-walltime
+Job Wall-clock time: 00:00:39
+Memory Utilized: 1.64 MB
+Memory Efficiency: 0.00% of 234.38 GB
