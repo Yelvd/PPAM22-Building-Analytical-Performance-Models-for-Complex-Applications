@@ -3,7 +3,7 @@
 tasks=( 24 )
 sizes=("s1" "s2" "s3" "s4" "s5" "s6" "s7" "s8" "s9")
 hemo=("000" "009" "010" "012" "014" "016" "018")
-tries=1
+trys=1
 
 for h in "${hemo[@]}"; do
 	for t in "${tasks[@]}"; do

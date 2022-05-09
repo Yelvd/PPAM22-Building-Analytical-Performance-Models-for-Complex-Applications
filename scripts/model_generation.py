@@ -275,7 +275,7 @@ def main(argv):
             results_dir = arg
         elif opt in ("-d"):
             machine = "das6"
-            iterations = 1000
+            iterations = 500
         elif opt in ("-s"):
             machine = "snellius" 
             iterations = 500
@@ -283,7 +283,7 @@ def main(argv):
             datadir = arg
 
     fig_name = fig_name.format(machine) 
-    datadir  = "../results/{}/model/results/".format(machine)
+    datadir  = "../results/{}/model/output/".format(machine)
     if datadir == "":
         print("no data dir given")
         sys.exit(1)
