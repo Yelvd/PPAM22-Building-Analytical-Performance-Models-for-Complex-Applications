@@ -1,0 +1,92 @@
+#!/bin/bash
+#SBATCH -t 00:30:00
+
+help () {
+	echo "experiment.job <hemocell-case> <config.xml> <RBC.pos>"
+	exit
+}
+
+echo Init: "$(date)"
+
+echo user:              "$USER"
+echo hostname:          "$HOSTNAME"
+echo jobname:           "$SLURM_JOB_NAME"
+echo nodelist:          "$SLURM_JOB_NODELIST"
+echo tasks for job:     "$SLURM_NTASKS"
+echo tasks per node:    "$SLURM_NTASKS_PER_NODE"
+
+export SCOREP_ENABLE_TRACING=false
+export SCOREP_ENABLE_PROFILING=true
+export SCOREP_FILTERING_FILE=/home/jellevd/filter.filter
+export SCOREP_EXPERIMENT_DIRECTORY=SCOREP-$SLURM_JOB_NAME-$SLURM_JOB_ID
+export SCOREP_METRIC_PAPI=perf::L1-DCACHE-LOADS,L1-DCACHE-LOAD-MISSES
+
+# load modules for hemocell
+module restore hemocell
+
+# load additional modules
+module list
+
+if (($# < 3)); then
+	echo "The number of args should be 3"
+	help
+fi
+
+# fill in example name
+EXPERIMENT=$1
+CONFIG_FILE=$2
+RBC_FILE=$3
+
+output_dir=$(pwd)/output
+TMPDIR=/home/jellevd/tmp-results/$SLURM_JOB_NAME-$SLURM_JOB_ID
+
+
+echo "Hemocell-case: "$EXPERIMENT""
+echo "Configfile: "$CONFIG_FILE""
+echo "RBC file: "$RBC_FILE""
+
+# create directory tree incl config directory on scratch space
+mkdir -p $TMPDIR/$EXPERIMENT
+wait
+
+# copy the required files into the scratch space
+src="$HOME/hemocell/examples/$EXPERIMENT"
+dst="$TMPDIR/$EXPERIMENT"
+cp "$src/$EXPERIMENT" "$dst/$EXPERIMENT"
+cp "$RBC_FILE" "$dst/RBC.pos"
+
+for file in "PLT.pos" "RBC.xml"; do
+	cp "$file" "$dst/$file"
+done
+
+cp $CONFIG_FILE $dst/$CONFIG_FILE
+wait
+
+# move into the scratch
+cd "$TMPDIR"/"$EXPERIMENT" || exit 1
+
+# start the current job
+echo "Start:" "$(date)"
+mpirun "$EXPERIMENT" $CONFIG_FILE
+wait
+echo "Done:" "$(date)"
+
+# copy back output
+cd "$TMPDIR" || exit 1
+ls -la "$TMPDIR"/"$EXPERIMENT"
+
+# gather local storage from all nodes
+dst=$output_dir
+mkdir -p "$dst"
+
+# gather local storage from all nodes
+mv $TMPDIR/$EXPERIMENT/tmp_1/log_1/logfile.statistics $dst/$SLURM_JOB_NAME-$SLURM_JOB_ID.stats
+mv $TMPDIR/$EXPERIMENT/$SCOREP_EXPERIMENT_DIRECTORY $dst/$SCOREP_EXPERIMENT_DIRECTORY
+(cd $TMPDIR/$EXPERIMENT; ~/hemocell/scripts/batchPostProcess.sh)
+mv $TMPDIR/$EXPERIMENT/tmp_1/*.xmf $dst/$SCOREP_EXPERIMENT_DIRECTORY/
+mv $TMPDIR/$EXPERIMENT/tmp_1/hdf5 $dst/$SCOREP_EXPERIMENT_DIRECTORY/
+#mv $TMPDIR/$EXPERIMENT/tmp_1/csv $dst/$SCOREP_EXPERIMENT_DIRECTORY/
+
+#rm -r $TMPDIR
+
+echo "Complete:" "$(date)"

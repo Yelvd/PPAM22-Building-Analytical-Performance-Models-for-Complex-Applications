@@ -166,7 +166,8 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
                     opt = True
                     tmp_balanced = balanced_df[i].loc[balanced_df[i]['H'] == '009']
                 if m == 'snellius':
-                    continue
+                    opt = True
+                    tmp_balanced = balanced_df[i].loc[balanced_df[i]['H'] == '002']
 
             j += 1
 
@@ -280,9 +281,10 @@ def print_latex_table(analysis_df, balanced_df, models, total=True, machines=['d
                     opt = True
                     tmp_balanced = balanced_df[i].loc[balanced_df[i]['H'] == '009']
                 if m == 'snellius':
-                    continue
-                    # opt = True
-                    # tmp_balanced = balanced_df[i].loc[balanced_df[i]['H'] == '010']
+                    tmp_balanced = balanced_df[i].loc[balanced_df[i]['H'] == '002']
+
+                    opt = True
+
             # print(H)
             # if H in ["z200"]:
             #     tmp_balanced = balanced_df[i].loc[balanced_df[i]['H'] == '014']
@@ -304,6 +306,7 @@ def print_latex_table(analysis_df, balanced_df, models, total=True, machines=['d
                     tmpstr += "& {} / {} ".format(16, 112)
 
             pred = model_res['total']
+            # pred -= (model_res['collideAndStream_comm'] * (13 / 18)) + (model_res['syncEnvelopes_comm'] * (8 / 26))
             res = np.mean(tmp['total'])
             std = np.std(tmp['total'])
             err = np.abs(pred - res) * (100 / res)
@@ -347,10 +350,13 @@ if __name__ == "__main__":
     results_bal_df_das, exp_bal_df_das = model_generation.load_data(datadir_bal.format("das6"))
     exp_bal_df_das = exp_bal_df_das.loc[exp_bal_df_das['largest_subdomain'] == (100,100,100)]
 
-
     results_bal_df_snel, exp_bal_df_snel = model_generation.load_data(datadir_bal.format("snellius"))
     exp_bal_df_snel = exp_bal_df_snel.loc[exp_bal_df_snel['largest_subdomain'] == (100,100,100)]
-    
+    results_bal_df_snel_02, exp_bal_df_snel_02 = model_generation.load_data('../results/snellius/balanced-02/output/')
+
+    results_bal_df_snel = pd.concat([results_bal_df_snel, results_bal_df_snel_02])    
+    exp_bal_df_snel = pd.concat([exp_bal_df_snel, exp_bal_df_snel_02])
+
     analysis_bal_df_das = pd.merge(results_bal_df_das, exp_bal_df_das, on=['jobid'], how="right")
     analysis_bal_df_snel = pd.merge(results_bal_df_snel, exp_bal_df_snel, on=['jobid'], how="right")
 
