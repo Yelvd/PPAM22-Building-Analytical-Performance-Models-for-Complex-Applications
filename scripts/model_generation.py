@@ -151,8 +151,12 @@ def plot_validation(testing_df, model, name):
     testing_df = testing_df.loc[testing_df.groupby('jobid', sort=False)['total'].idxmax()]
     testing_df['sizestr'] = ["({}, {}, {})".format(x, y, z) for (x, y, z) in testing_df['largest_subdomain']]
 
-    fig = plt.figure(figsize=(15, 15))
-    ax = fig.add_subplot(2, 1, 1)
+    # ax1 = fig.add_subplot(2, 1, 1)
+    # ax2 = ax1.twinx()
+    fig, (ax1, ax2) = plt.subplots(2, figsize=(15, 12), sharex=True)
+
+    plt.rcParams['font.size'] = 20
+    plt.rcParams.update({'font.weight': 'bold'})
 
     fit_exp_df = testing_df.sort_values("N")
     width = .7
@@ -170,31 +174,39 @@ def plot_validation(testing_df, model, name):
             tmp = testing_df.loc[testing_df['h'] == H]
             tmp = tmp.loc[tmp['largest_subdomain'] == s]
             
-            plt.errorbar(i - offset, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=30, color=CB_color_cycle[hi], fmt=".", capsize=5, lw=1)
-            plt.plot(i - offset, run_model(model, s, r), 'x', color=CB_color_cycle[hi], ms=20)
+            ax1.errorbar(i - offset, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=30, color=CB_color_cycle[hi], fmt=".", capsize=5, lw=1)
+            ax1.plot(i - offset, run_model(model, s, r), 'x', color=CB_color_cycle[hi], ms=20)
+
+            pred_error = np.abs(run_model(model, s, r) - np.mean(tmp['total'])) * (100 / np.mean(tmp['total']))
+            ax2.plot(i - offset, pred_error, 'X', color=CB_color_cycle[hi], ms=10)
             
             offset -= stride
             legend_handels.append( Line2D([0], [0], color=CB_color_cycle[hi], lw=0, marker='o', ms=10, label='H{}\%'.format(H)))
             # legend_handels.append( Line2D([0], [0], color=CB_color_cycle[hi], lw=0, marker='x', label='H{}\ Prediction%'.format(H)))
 
-    legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='x', ms=10, label='Model Prediction'.format(H)))        
-    legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='o', ms=10, label='Empirical Results'.format(H)))
+    legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='x', ms=10, label='Prediction'))        
+    legend_handels.insert(0, Line2D([0], [0], color='k', lw=0, marker='o', ms=10, label='Empirical Results'))
 
     # plt.grid(True, which="both", ls="-", color='0.65')
 
-    plt.rcParams.update({'font.size': 20})
     # plt.rcParams.update({'axes.linewidth': 5})
-    plt.rcParams.update({'font.weight': 'bold'})
     # plt.rcParams.update({'font.size': 20})
 
-    plt.legend(handles=legend_handels, loc='lower right')
-    ax.set_yscale('log')
-    plt.ylim(0.01, 15 ** 3) 
-    plt.ylabel("Time in Seconds")
-    plt.xlabel("Domain Size in µm (x, y, z)")
+    ax1.legend(handles=legend_handels, loc='upper left', prop={'size': 20})
+    # ax.set_yscale('log')
+    ax1.set_ylim(0.01, 700) 
+    plt.yticks(fontsize=15)
+    ax1.set_ylabel("Time in Seconds", fontsize=25)
+    plt.xlabel("Domain Size in µm (x, y, z)", fontsize=25)
+
+    ax2.set_ylabel('Prediction Error [\%]', fontsize=25)  # we already handled the x-label with ax1
+    ax2.set_ylim(0, 30)
+
+    # ax2.plot(t, data2, color=color)
+    # ax2.tick_params(axis='y')
     # plt.title("Model Verification on DAS-6 (1 node, 24 processes)")
     # plt.xticks(, pd.unique(fit_exp_df['sizestr']), rotation='vertical')
-    plt.xticks(range(np.unique(np.sort(fit_exp_df['largest_subdomain'])).size), [ "({:g}, {:g}, {:g})".format(0.5 * x[0], 0.5 * x[1],0.5 * x[2])  for x in pd.unique(fit_exp_df['largest_subdomain'])])
+    plt.xticks(range(np.unique(np.sort(fit_exp_df['largest_subdomain'])).size), [ "({:g}, {:g}, {:g})".format(0.5 * x[0], 0.5 * x[1],0.5 * x[2])  for x in pd.unique(fit_exp_df['largest_subdomain'])], fontsize=15)
     plt.tight_layout()
     plt.savefig(results_dir + name + ".pdf", bbox_inches='tight')
     # plt.savefig(results_dir + "model-prediction_das6.svg", bbox_inches='tight')

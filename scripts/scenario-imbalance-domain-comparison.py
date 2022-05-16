@@ -176,8 +176,11 @@ def plot_analysis(analysis_df, balanced_df, models, machines=['das6', 'snellius'
         balanced_df[i] = balanced_df[i].loc[balanced_df[i]['component'] == 'total']
         balanced_df[i] = balanced_df[i].loc[balanced_df[i].groupby('jobid', sort=False)['total'].idxmax()]
 
-    fig = plt.figure(figsize=(15, 15))
-    ax = fig.add_subplot(2, 1, 1)
+    plt.rcParams.update({'font.size': 20})
+    plt.rcParams.update({'font.weight': 'bold'})
+
+    fig, (ax1, ax2) = plt.subplots(2, figsize=(15, 12), sharex=True)
+
     exp = []
 
     for i, m in enumerate(machines):
@@ -204,10 +207,16 @@ def plot_analysis(analysis_df, balanced_df, models, machines=['das6', 'snellius'
 
             legend_handels = []
 
-            plt.errorbar(i * len(machines) + j, np.mean(tmp_balanced['total']), yerr=np.std(tmp_balanced['total']), ms=30, color=CB_color_cycle[0], fmt=".", capsize=5, lw=1, zorder=1)
-            plt.errorbar(i * len(machines) + j, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=30, color=CB_color_cycle[1], fmt=".", capsize=5, lw=1, zorder=1)
-            plt.plot(i * len(machines) + j, model_res_naive['total'], ms=20, color=CB_color_cycle[0], marker="x", lw=0)
-            plt.plot(i * len(machines) + j, model_res_3['total'] * 3, ms=20, color=CB_color_cycle[1], marker="x", lw=0)
+            ax1.errorbar(i * len(machines) + j, np.mean(tmp_balanced['total']), yerr=np.std(tmp_balanced['total']), ms=30, color=CB_color_cycle[0], fmt=".", capsize=5, lw=1, zorder=1)
+            ax1.errorbar(i * len(machines) + j, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=30, color=CB_color_cycle[1], fmt=".", capsize=5, lw=1, zorder=1)
+            ax1.plot(i * len(machines) + j, model_res_naive['total'], ms=20, color=CB_color_cycle[0], marker="x", lw=0)
+            ax1.plot(i * len(machines) + j, model_res_3['total'] * 3, ms=20, color=CB_color_cycle[1], marker="x", lw=0)
+
+            pred_error = np.abs(model_res_naive['total'] - np.mean(tmp_balanced['total'])) * (100 / np.mean(tmp_balanced['total']))
+            ax2.plot(i * len(machines) + j, pred_error, 'X', color=CB_color_cycle[0], ms=10)
+
+            pred_error = np.abs(model_res_3['total'] * 3 - np.mean(tmp['total'])) * (100 / np.mean(tmp['total']))
+            ax2.plot(i * len(machines) + j, pred_error, 'X', color=CB_color_cycle[1], ms=10)
 
             # legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[j], lw=0, marker='.', ms=20, label='H{}%'.format(H)))
             exp.append("{}: H{}\%".format(m, H))
@@ -220,17 +229,15 @@ def plot_analysis(analysis_df, balanced_df, models, machines=['das6', 'snellius'
     # legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[1], lw=0, marker='x', ms=10, label='Prediction imbalanced'))
 
 
-    plt.rcParams.update({'font.size': 20})
-    plt.rcParams.update({'font.weight': 'bold'})
-
-    plt.legend(handles=legend_handels)
-    plt.ylim(0)
+    ax1.legend(handles=legend_handels, prop={'size': 20}) 
+    ax1.set_ylim(0, 700)
+    ax2.set_ylim(0, 30)
     # plt.xlim(-.5, 1.5)
-    plt.ylabel("Time in Seconds")
-    plt.xlabel("processes")
-    plt.title("Hematocrit imbalance snellius (1 node, 128 processes)")
+    ax1.set_ylabel("Time in Seconds", fontsize=25)
+    ax2.set_ylabel("Prediction error [\%]", fontsize=25)
+    # plt.title("Hematocrit imbalance snellius (1 node, 128 processes)")
     # plt.xticks(range(np.unique(np.sort(analysis_df['H'])).size), [ "H - {}".format(x)  for x in np.sort(pd.unique(analysis_df['H']))])
-    plt.xticks(np.arange(len(exp)), exp, rotation=30)  # Set text labels and properties.
+    plt.xticks(np.arange(len(exp)), exp, rotation=45, fontsize=25)  # Set text labels and properties.
     # plt.xticks(range(machines), machines)
     plt.savefig(results_dir + fig_name + ".pdf", bbox_inches='tight')
     # plt.show()

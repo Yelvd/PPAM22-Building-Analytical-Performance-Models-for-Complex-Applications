@@ -138,8 +138,11 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
 
 
 
+    plt.rcParams.update({'font.size': 20})
+    plt.rcParams.update({'font.weight': 'bold'})
+
     fig = plt.figure(figsize=(15, 15))
-    ax = fig.add_subplot(2, 1, 1)
+    fig, (ax1, ax2) = plt.subplots(2, figsize=(15, 12), sharex=True)
     axis_label = []
 
 
@@ -180,13 +183,19 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
             model_res_naive['total'] = model_res_naive['particle'] + model_res_naive['coupling']
             model_res['total'] = model_res['particle'] + model_res['coupling']
             
-            plt.errorbar(j, np.mean(tmp_balanced['total']), yerr=np.std(tmp_balanced['total']), ms=30, color=CB_color_cycle[0], fmt=".", capsize=5, lw=1, zorder=1)
-            plt.errorbar(j, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=30, color=CB_color_cycle[1], fmt=".", capsize=5, lw=1, zorder=1)
-            plt.plot(j, model_res_naive['total'], ms=20, color=CB_color_cycle[0], marker="x", lw=0)
-            plt.plot(j, model_res['total'], ms=20, color=CB_color_cycle[1], marker="x", lw=0) 
+            ax1.errorbar(j, np.mean(tmp_balanced['total']), yerr=np.std(tmp_balanced['total']), ms=30, color=CB_color_cycle[0], fmt=".", capsize=5, lw=1, zorder=1)
+            ax1.errorbar(j, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=30, color=CB_color_cycle[1], fmt=".", capsize=5, lw=1, zorder=1)
+            ax1.plot(j, model_res_naive['total'], ms=20, color=CB_color_cycle[0], marker="x", lw=0)
+            ax1.plot(j, model_res['total'], ms=20, color=CB_color_cycle[1], marker="x", lw=0) 
  
-            name = ""
+            pred_error = np.abs(model_res_naive['total'] - np.mean(tmp_balanced['total'])) * (100 / np.mean(tmp_balanced['total']))
+            ax2.plot(j, pred_error, 'X', color=CB_color_cycle[0], ms=10)
+
+            pred_error = np.abs(model_res['total'] - np.mean(tmp['total'])) * (100 / np.mean(tmp['total']))
+            ax2.plot(j, pred_error, 'X', color=CB_color_cycle[1], ms=10)
             
+            name = ""
+
             if m == 'das6':
                 name += "DAS6: 12/12, "
                 if H[0] == 's':
@@ -206,8 +215,7 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
                 if H[0] == 's':
                     name += '18\%/9\%'
                 if H[0] == 'z':
-                    name += '18\%/0\%'
-                
+                    name += '18\%/0\%'                
                 
             axis_label.append(name)
 
@@ -218,16 +226,16 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
     legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[0], lw=0, marker='x', ms=10, label='Balanced Prediction'))        
     legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[1], lw=0, marker='x', ms=10, label='Imbalanced Prediction'))
 
-    plt.rcParams.update({'font.size': 20})
-    plt.rcParams.update({'font.weight': 'bold'})
 
-    plt.legend(handles=legend_handels)
+    ax1.legend(handles=legend_handels, prop={'size': 20})
     # ax.set_yscale('log')
-    plt.ylim(0)
-    plt.ylabel("Particle + Coupling time in seconds")
-    plt.xlabel("Experiment")
+    ax2.set_ylim(0, 30)
+    ax1.set_ylim(0, 120)
+    ax1.set_ylabel("Particle + Coupling time in seconds", fontsize=25)
+    ax2.set_ylabel("Prediction error [\%]", fontsize=25)
+    # plt.xlabel("Experiment", fontsize=25)
     # plt.title("Hematocrit imbalance")
-    plt.xticks(np.arange(len(axis_label)), axis_label, rotation=45)
+    plt.xticks(np.arange(len(axis_label)), axis_label, rotation=45, fontsize=25)
     plt.tight_layout()
     plt.savefig(results_dir + fig_name + "-{}".format("partial") + ".pdf", bbox_inches='tight')
     # plt.show()
@@ -263,26 +271,35 @@ def print_latex_table(analysis_df, balanced_df, models, total=True, machines=['d
             
             opt = False
             tmp = analysis_df[i].loc[analysis_df[i]['H'] == H]
+            balanced_hemo = 0
 
             if H in ["s200"]:
                 tmp_balanced = balanced_df[i].loc[balanced_df[i]['H'] == '014']
+                balanced_hemo = 14
+
             if H in ["z200"]:
                 tmp_balanced = balanced_df[i].loc[balanced_df[i]['H'] == '009']
+                balanced_hemo = 9
+
 
             if H in ["s50"]:
                 if m == 'das6':
                     opt = True
                     tmp_balanced = balanced_df[i].loc[balanced_df[i]['H'] == '014']
+                    balanced_hemo = 14
+
                 if m == 'snellius':
                     opt = True
                     tmp_balanced = balanced_df[i].loc[balanced_df[i]['H'] == '010']
+                    balanced_hemo = 10
             if H in ["z50"]:
                 if m == 'das6':
                     opt = True
                     tmp_balanced = balanced_df[i].loc[balanced_df[i]['H'] == '009']
+                    balanced_hemo = 9
                 if m == 'snellius':
                     tmp_balanced = balanced_df[i].loc[balanced_df[i]['H'] == '002']
-
+                    balanced_hemo = 2
                     opt = True
 
             # print(H)
@@ -305,6 +322,7 @@ def print_latex_table(analysis_df, balanced_df, models, total=True, machines=['d
                 elif m == "snellius":
                     tmpstr += "& {} / {} ".format(16, 112)
 
+            tmpstr += "& {}\%".format(balanced_hemo)
             pred = model_res['total']
             # pred -= (model_res['collideAndStream_comm'] * (13 / 18)) + (model_res['syncEnvelopes_comm'] * (8 / 26))
             res = np.mean(tmp['total'])
