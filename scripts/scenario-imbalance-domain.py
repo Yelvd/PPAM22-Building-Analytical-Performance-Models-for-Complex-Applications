@@ -163,7 +163,7 @@ def plot_analysis(analysis_df, models, machines=['das6', 'snellius']):
     print(analysis_df[0])
 
     width = 0.15
-    fig = plt.figure(figsize=(15, 15))
+    fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(2, 1, 1)
     exp = []
 

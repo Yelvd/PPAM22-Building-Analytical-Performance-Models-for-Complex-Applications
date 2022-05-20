@@ -157,7 +157,7 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
         analysis_df[j] = pd.DataFrame(new_data, columns=['largest_subdomain', 'RBCs', 'total', 'H']) 
         balanced_df[j] = pd.DataFrame(new_data_balanced, columns=['largest_subdomain', 'RBCs', 'total', 'H']) 
 
-    fig, (ax1, ax2) = plt.subplots(2, figsize=(15, 12), sharex=True)
+    fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(20, 6), sharex=True)
     axis_label = []
 
     j = -1
@@ -204,9 +204,9 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
                 scale = (1, 13 / 26)
             
             if H[0] == 's':
-                name += '18\%/9\%'
+                name += '9\%'
             if H[0] == 'z':
-                name += '18\%/0\%'
+                name += '0\%'
             
             
             # scale = (0, 0)
@@ -221,15 +221,15 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
                 model_res_naive['total'] = model_res_naive['particle'] + model_res_naive['coupling']
                 model_res['total'] = model_res['particle'] + model_res['coupling']
             
-            ax1.errorbar(j, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=30, color=CB_color_cycle[1], fmt=".", capsize=5, lw=1, zorder=1)
-            ax1.plot(j, model_res_naive['total'], ms=20, color=CB_color_cycle[1], marker="x", lw=0)
-            ax1.plot(j, model_res['total'], ms=20, color=CB_color_cycle[2], marker="*", lw=0) 
+            ax1.errorbar(j, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=35, color=CB_color_cycle[1], fmt=".", capsize=5, lw=1, zorder=1)
+            ax1.plot(j, model_res_naive['total'], ms=30, color=CB_color_cycle[1], marker="x", lw=0)
+            ax1.plot(j, model_res['total'], ms=30, color=CB_color_cycle[2], marker="*", lw=0) 
 
             pred_error = np.abs(model_res_naive['total'] - np.mean(tmp['total'])) * (100 / np.mean(tmp['total']))
-            ax2.plot(j, pred_error, 'X', color=CB_color_cycle[1], ms=15)
+            ax2.plot(j, pred_error, 'X', color=CB_color_cycle[1], ms=20)
 
             pred_error = np.abs(model_res['total'] - np.mean(tmp['total'])) * (100 / np.mean(tmp['total']))
-            ax2.plot(j, pred_error, '*', color=CB_color_cycle[2], ms=15)
+            ax2.plot(j, pred_error, '*', color=CB_color_cycle[2], ms=20)
  
             axis_label.append(name)
 
@@ -259,12 +259,22 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
             print(tmpstr)
 
 
+    ax1.tick_params(axis='both', which='major', labelsize=25)
+    ax1.tick_params(axis='both', which='minor', labelsize=25)
+    ax2.tick_params(axis='both', which='major', labelsize=25)
+    ax2.tick_params(axis='both', which='minor', labelsize=25)
+
     legend_handels = []
     legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[1], lw=0, marker='.', ms=10, label='Imbalanced Results'))
     legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[1], lw=0, marker='x', ms=10, label='Naive Prediction'))        
     legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[2], lw=0, marker='*', ms=10, label='New Prediction'))
 
-    ax1.legend(handles=legend_handels, loc='upper left', prop={'size': 20})
+    legend_handels2 = [] 
+    legend_handels2.insert(0, Line2D([0], [0], color=CB_color_cycle[1], lw=0, marker='X', ms=10, label='Naive Prediction Error'))
+    legend_handels2.insert(0, Line2D([0], [0], color=CB_color_cycle[2], lw=0, marker='X', ms=10, label='New Prediction Error'))
+
+    ax1.legend(handles=legend_handels, loc='upper left', prop={'size': 15})
+    ax2.legend(handles=legend_handels2, loc='upper right', prop={'size': 15})
     ax2.set_ylim(0, 30)
     if(total):
         ax1.set_ylabel("Time in seconds", fontsize=25)
@@ -274,7 +284,8 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
         ax1.set_ylim(0, 120)
         
     ax2.set_ylabel("Prediction error [\%]", fontsize=25)
-    plt.xticks(np.arange(len(axis_label)), axis_label, rotation=45, fontsize=20)
+    ax1.set_xticks(np.arange(len(axis_label)), axis_label, rotation=45, fontsize=25)
+    ax2.set_xticks(np.arange(len(axis_label)), axis_label, rotation=45, fontsize=25)
     plt.tight_layout()
     plt.savefig(results_dir + fig_name + "-{}".format("total" if total else "partial") + ".pdf", bbox_inches='tight')
 

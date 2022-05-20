@@ -136,13 +136,10 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
         analysis_df[j] = pd.DataFrame(new_data, columns=['largest_subdomain', 'RBCs', 'total', 'H']) 
         balanced_df[j] = pd.DataFrame(new_data_balanced, columns=['largest_subdomain', 'RBCs', 'total', 'H']) 
 
-
-
     plt.rcParams.update({'font.size': 20})
     plt.rcParams.update({'font.weight': 'bold'})
 
-    fig = plt.figure(figsize=(15, 15))
-    fig, (ax1, ax2) = plt.subplots(2, figsize=(15, 12), sharex=True)
+    fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(20, 6))
     axis_label = []
 
 
@@ -183,29 +180,29 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
             model_res_naive['total'] = model_res_naive['particle'] + model_res_naive['coupling']
             model_res['total'] = model_res['particle'] + model_res['coupling']
             
-            ax1.errorbar(j, np.mean(tmp_balanced['total']), yerr=np.std(tmp_balanced['total']), ms=30, color=CB_color_cycle[0], fmt=".", capsize=5, lw=1, zorder=1)
-            ax1.errorbar(j, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=30, color=CB_color_cycle[1], fmt=".", capsize=5, lw=1, zorder=1)
-            ax1.plot(j, model_res_naive['total'], ms=20, color=CB_color_cycle[0], marker="x", lw=0)
-            ax1.plot(j, model_res['total'], ms=20, color=CB_color_cycle[1], marker="x", lw=0) 
+            ax1.errorbar(j, np.mean(tmp_balanced['total']), yerr=np.std(tmp_balanced['total']), ms=35, color=CB_color_cycle[0], fmt=".", capsize=5, lw=1, zorder=1)
+            ax1.errorbar(j, np.mean(tmp['total']), yerr=np.std(tmp['total']), ms=35, color=CB_color_cycle[1], fmt=".", capsize=5, lw=1, zorder=1)
+            ax1.plot(j, model_res_naive['total'], ms=30, color=CB_color_cycle[0], marker="x", lw=0)
+            ax1.plot(j, model_res['total'], ms=30, color=CB_color_cycle[1], marker="x", lw=0) 
  
             pred_error = np.abs(model_res_naive['total'] - np.mean(tmp_balanced['total'])) * (100 / np.mean(tmp_balanced['total']))
-            ax2.plot(j, pred_error, 'X', color=CB_color_cycle[0], ms=10)
+            ax2.plot(j, pred_error, 'X', color=CB_color_cycle[0], ms=20)
 
             pred_error = np.abs(model_res['total'] - np.mean(tmp['total'])) * (100 / np.mean(tmp['total']))
-            ax2.plot(j, pred_error, 'X', color=CB_color_cycle[1], ms=10)
+            ax2.plot(j, pred_error, 'X', color=CB_color_cycle[1], ms=20)
             
             name = ""
 
             if m == 'das6':
-                name += "DAS6: 12/12, "
+                name += "DAS6 \n 12/12, "
                 if H[0] == 's':
-                    name += '18\%/9\%'
+                    name += '9\%'
                 if H[0] == 'z':
-                    name += '18\%/0\%'
+                    name += '0\%'
             
             if m == 'snellius':
                 
-                name += "Snelius: "
+                name += "Snelius \n"
 
                 if H[1] == '5':
                     name += '16/112, '
@@ -213,9 +210,9 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
                     name += '64/64, '
                     
                 if H[0] == 's':
-                    name += '18\%/9\%'
+                    name += '9\%'
                 if H[0] == 'z':
-                    name += '18\%/0\%'                
+                    name += '0\%'                
                 
             axis_label.append(name)
 
@@ -226,16 +223,30 @@ def plot_analysis(analysis_df, balanced_df, models, total=True, machines=['das6'
     legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[0], lw=0, marker='x', ms=10, label='Balanced Prediction'))        
     legend_handels.insert(0, Line2D([0], [0], color=CB_color_cycle[1], lw=0, marker='x', ms=10, label='Imbalanced Prediction'))
 
+    legend_handels2 = [] 
+    legend_handels2.insert(0, Line2D([0], [0], color=CB_color_cycle[0], lw=0, marker='X', ms=10, label='Balanced Prediction Error'))
+    legend_handels2.insert(0, Line2D([0], [0], color=CB_color_cycle[1], lw=0, marker='X', ms=10, label='Imbalanced Prediction Error'))
 
-    ax1.legend(handles=legend_handels, prop={'size': 20})
+    # box = ax1.get_position()
+    # ax1.set_position([box.x0, box.y0 + box.height * 0.1, box.width, box.height * 0.9])
+
+    ax1.legend(handles=legend_handels, prop={'size': 15}, loc="upper left") # bbox_to_anchor=(0, 1.4), fancybox=True, shadow=True, ncol=2) #, bbox_to_anchor=(0.40, 1.05), ncol=2, fancybox=True)
+    ax2.legend(handles=legend_handels2, prop={'size': 15}, loc="upper left") # bbox_to_anchor=(0, 1.4), fancybox=True, shadow=True, ncol=2) #, bbox_to_anchor=(0.40, 1.05), ncol=2, fancybox=True)
     # ax.set_yscale('log')
+    ax1.tick_params(axis='both', which='major', labelsize=25)
+    ax1.tick_params(axis='both', which='minor', labelsize=25)
+    ax2.tick_params(axis='both', which='major', labelsize=25)
+    ax2.tick_params(axis='both', which='minor', labelsize=25)
+    # ax1.set_xlim(1, len(axis_label))
     ax2.set_ylim(0, 30)
     ax1.set_ylim(0, 120)
-    ax1.set_ylabel("Particle + Coupling time in seconds", fontsize=25)
+    ax1.set_ylabel("Particle + Coupling \n time in seconds", fontsize=25)
     ax2.set_ylabel("Prediction error [\%]", fontsize=25)
     # plt.xlabel("Experiment", fontsize=25)
     # plt.title("Hematocrit imbalance")
-    plt.xticks(np.arange(len(axis_label)), axis_label, rotation=45, fontsize=25)
+    # print(axis_label)
+    ax1.set_xticks(np.arange(len(axis_label)), axis_label, rotation=45, fontsize=25)
+    ax2.set_xticks(np.arange(len(axis_label)), axis_label, rotation=45, fontsize=25)
     plt.tight_layout()
     plt.savefig(results_dir + fig_name + "-{}".format("partial") + ".pdf", bbox_inches='tight')
     # plt.show()
