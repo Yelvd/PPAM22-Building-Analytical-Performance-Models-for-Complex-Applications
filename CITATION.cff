@@ -1,0 +1,20 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  Building Fine-Grained Analytical Performance Models
+  for Complex Scientific Applications
+message: >-
+  If you use this dataset, please cite it using the
+  metadata from this file.
+type: dataset
+authors:
+  - given-names: Jelle van Dijk
+    name-particle: Jelle
+    family-names: van Dijk
+    email: jelle.van.dijk@uva.nl
+    affiliation: UvA
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.6570501
