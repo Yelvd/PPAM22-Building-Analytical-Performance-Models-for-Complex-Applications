@@ -179,7 +179,7 @@ def plot_analysis(analysis_df, balanced_df, models, machines=['das6', 'snellius'
     plt.rcParams.update({'font.size': 20})
     plt.rcParams.update({'font.weight': 'bold'})
 
-    fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(20, 6))
+    fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(20, 4))
     
 
     exp = []
