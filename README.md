@@ -2,7 +2,7 @@
 
 This repositry contains the data, figures, and scripts used for our paper __"Building Fine-Grained Analytical Performance Models for Complex Applications"__
 
-This work focuses on creating an analytical performance model for [Hemocell](https://github.com/UvaCsl/HemoCell)
+This work focuses on creating an analytical performance model for [Hemocell](https://github.com/UvaCsl/HemoCell).
 
 ## Structure
 - **experiment-template**: Template for running experiments
