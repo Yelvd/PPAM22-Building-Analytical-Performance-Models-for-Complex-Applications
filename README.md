@@ -2,6 +2,9 @@
 
 This repositry contains the data, figures, and scripts used for our paper __"Building Fine-Grained Analytical Performance Models for Complex Applications"__
 
+van Dijk, J.; Zavodszky, G.; Varbanescu, A.-L.; Pimentel, A. D.; Hoekstra, A. Building a Fine-Grained Analytical Performance Model for Complex Scientific Simulations. In Parallel Processing and Applied Mathematics; Wyrzykowski, R., Dongarra, J., Deelman, E., Karczewski, K., Eds.; Lecture Notes in Computer Science; Springer International Publishing: Cham, 2023; pp 183–196. [https://doi.org/10.1007/978-3-031-30442-2_14](https://doi.org/10.1007/978-3-031-30442-2_14).
+
+
 This work focuses on creating an analytical performance model for [Hemocell](https://github.com/UvaCsl/HemoCell).
 
 ## Structure
